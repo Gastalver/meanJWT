@@ -4,8 +4,9 @@
   "description": "API Server with JWT Authorization strategy.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "test"
+    "start desarrollo": "./node_modules/.bin/cross-env NODE_ENV=development nodemon index.js",
+    "start produccion": "./node_modules/.bin/cross-env NODE_ENV=production node index.js",
+    "test": "./node_modules/.bin/cross-env NODE_ENV=test ./node_modules/jasmine/bin/jasmine.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "jwt-simple": "^0.5.1",
     "moment": "^2.22.2",
@@ -36,6 +38,15 @@
     "winston": "^2.4.2"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "cross-env": "^5.1.6",
+    "debug": "^3.1.0",
+    "jasmine": "^3.1.0",
+    "karma": "^2.0.2",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage": "^1.1.2",
+    "karma-jasmine": "^1.1.2",
+    "karma-requirejs": "^1.1.0",
+    "nodemon": "^1.17.5",
+    "requirejs": "^2.3.5"
   }
 }
