@@ -3,6 +3,7 @@
 // Dependencias
 var express = require('express');
 var bodyParser = require('body-parser');
+var debug = require('debug')('index');
 
 // Creamos una instancia del objeto express para gestionar la comunicación HTTP
 var server = express();

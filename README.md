@@ -22,7 +22,7 @@ Estructura básica de una **aplicación web** basada en MongoDB, Express, Angula
 * [**`requirejs`**]() Para probar métodos que impliquen HTTP en las especificaciones.
 * [**`karma-coverage`**](https://www.npmjs.com/package/karma-coverage) Para saber qué porcentaje del código está cubierto por los tests.
 ### Consideraciones generales
-### Modo estricto
+#### Modo estricto
 * `use strict` Se utiliza el modo estricto para forzar excepciones en todos los errores y que no pasen desapercibidos; por velocidad de ejecución (es optimizado mejor), y como transición a las futuras versiones de ECMAScript. 
 #### Configuración mediante un objeto
 Para simplificar el acceso a opciones de configuración generales optamos por crear un módulo que exporta un objeto cuyas propiedades recogen los parámetros de configuración, objeto que importamos desde `index.js` y lo asignamos a la variable `configuracion` para que esté disponible en toda la aplicación.
