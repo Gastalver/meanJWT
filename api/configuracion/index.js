@@ -5,48 +5,20 @@
 const path = require('path');
 var winston = require('winston');
 
-// Cargamos o creamos objetos con las configuraciones.
+
+// Cargamos objetos con las configuraciones que cambian según el entorno de desarrollo
 const development = require('./env/development');
 const test = require('./env/test');
 const production = require('./env/production');
 
-const defaults = {
-    root: path.join(__dirname,'..'),
-}
-
-const global = {
-    url: 'api1'
-}
-
-const logger = {
-    winstonConfig: {
-
-        transports: [
-            // new (winston.transports.Console)({
-            //     formatter: function (options) {
-            //         return options.message;
-            //     }
-            // }),
-            // new (winston.transports.File)({
-            //     name: 'info-file',
-            //     filename: __dirname + '/logs/info.log',
-            //     level:'info'
-            // }),
-            // new (winston.transports.File)({
-            //     name: 'error-file',
-            //     filename: __dirname + '/logs/error.log',
-            //     level:'error'
-            // }),
-            // new (winston.transports.File)({
-            //     name: 'exceptions-file',
-            //     filename: __dirname + '/logs/exceptions.log',
-            //     handleExceptions: true,
-            //     humanReadableUnhandledException: true,
-            //     level:'error'
-            // })
-        ]
+// Creamos otros objetos con configuraciones comunes.
+const comun  = {
+    global: {
+        root: path.join(__dirname,'..'),
+        url: 'api1'
     }
 }
+
 
 /** De las configuraciones de entorno sólo exportamos la que sea igual a la variable de entorno
  * process.env.NODE_ENV y si no existe, sólo exportamos development. Esto se consigue con la expresión
@@ -55,7 +27,7 @@ const logger = {
  */
 
 module.exports = {
-    development: Object.assign({}, development, defaults, global, logger),
-    test: Object.assign({}, test, defaults, global, logger),
-    production: Object.assign({}, production, defaults, global, logger)
+    development: Object.assign({}, development, comun),
+    test: Object.assign({}, test, comun),
+    production: Object.assign({}, production, comun)
 }[process.env.NODE_ENV || 'development'];

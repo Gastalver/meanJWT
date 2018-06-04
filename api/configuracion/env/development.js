@@ -5,7 +5,10 @@
  * @type {}
  */
 module.exports = {
-    bd : process.env.MONGODB_URL,
+    mongo: {
+        dbUrl: process.env.MONGODB_URL,
+        dbOptions: {dbName : 'meanjwt'}
+    },
     // google: {
     //     clientID: '388340877807-5l3mncedmh15l8pi62f1bll81gpf3rso.apps.googleusercontent.com',
     //     clientSecret: '0YKp-g47LicPU7m37E-md3vJ',
