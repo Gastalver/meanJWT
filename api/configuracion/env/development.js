@@ -7,7 +7,10 @@
 module.exports = {
     mongo: {
         dbUrl: process.env.MONGODB_URL,
-        dbOptions: {dbName : 'meanjwt'}
+        dbOptions: {dbName : 'meanjwt'},
+    },
+    express: {
+        port: 4000,
     },
     // google: {
     //     clientID: '388340877807-5l3mncedmh15l8pi62f1bll81gpf3rso.apps.googleusercontent.com',

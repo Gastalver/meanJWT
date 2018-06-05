@@ -11,7 +11,6 @@
 // Se posibilita el uso de un archivo distinto en cada despliegue en máquinas distintas.
 require('dotenv').config();
 
-
 // Dependencias.
 var debug = require('debug')('index');
 var fs = require('fs');
@@ -21,47 +20,56 @@ var mongoose = require('mongoose');
 // Carga la configuración global
 const config = require('./configuracion');
 
-console.log(config)
-
 // Configuracion de Winston (registro)
 winston.configure({
     transports: [
+        new (winston.transports.Console)({ level: 'info', colorize: true }),
         // new (winston.transports.File)({
         //     name: 'info-file',
         //     filename: __dirname + '/logs/info.log',
         //     level:'info'
         // }),
-        // new (winston.transports.File)({
-        //     name: 'error-file',
-        //     filename: __dirname + '/logs/error.log',
-        //     level:'error'
-        // }),
-        // new (winston.transports.File)({
-        //     name: 'exceptions-file',
-        //     filename: __dirname + '/logs/exceptions.log',
-        //     handleExceptions: true,
-        //     humanReadableUnhandledException: true,
-        //     level:'error'
-        // })
+        new (winston.transports.File)({
+            name: 'error-file',
+            filename: __dirname + '/logs/error.log',
+            handleExceptions: true,
+            humanReadableUnhandledException: true,
+            level:'error'
+        })
     ]
 });
 
-
-
-// Configuración de mongo.
-// const mongoOptions = { // TODO pasar config de mongo también al archivo config/index
-//     dbName : 'meanjwt'
-// }
-
-// Conexión con mongo. Una conexión 'equivale' a una Bd. // TODO COnfigurar la conexión con eventos ON, DISCONNECT, ETC.
-mongoose.connect(config.mongo.dbUrl, config.mongo.dbOptions)
-    .then (
-        ()=>{
-            winston.log('info','Conexión realizada correctamente a la base de datos.');
-            debug('Conexión realizada correctamente a la base de datos.')
+// Conexión con mongo y luego activación de express. //
+connect()
+    .then(
+        (bd)=>{
+            winston.log('info','Realizada conexión a bd ' + bd.connections[0].name);
+            //debug('Realizada conexión a bd ' + bd.connections[0].name)
+            //listen();
+            bd.on('disconnect',connect());
         },
         (error)=>{
-            winston.log('error',error);
-        }
-    )
+            winston.log('error','Error al intentar conectar con la bd: ' + error.message );
+            //debug('Error al intentar conectar con la bd ' + config.mongo.dbOptions.dbName' + ': ' + error.message );
+            connect();
+        })
 
+
+
+/**
+ * Realiza la conexión con la base de datos con las opciones de config
+ * @returns {Promise}
+ */
+function connect(){
+    return mongoose.connect(config.mongo.dbUrl, config.mongo.dbOptions);
+}
+
+/**
+ * Activa express en el puerto establecido en config
+ */
+function listen(){
+    if (app.get('env') === 'test') return;
+    app.listen(config.express.port);
+    winston.log('info',config.express.ok + config.express.port);
+    debug(config.express.ok + config.express.port)
+}
