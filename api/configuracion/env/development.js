@@ -8,6 +8,7 @@ module.exports = {
     mongo: {
         dbUrl: process.env.MONGODB_URL,
         dbOptions: {dbName : 'meanjwt'},
+        reconnectTimeout: 5000
     },
     express: {
         port: 4000,
