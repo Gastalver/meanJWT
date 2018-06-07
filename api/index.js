@@ -20,7 +20,10 @@ var mongoose = require('mongoose');
 // Carga la configuración global
 const config = require('./configuracion');
 
-// Configuracion de Winston (registro)
+
+/**
+ * Configuración de Winston (registro)
+ */
 winston.configure({
     transports: [
         new (winston.transports.Console)({ level: 'info', colorize: true }),
@@ -39,81 +42,42 @@ winston.configure({
     ]
 });
 
-
-var bd = mongoose.connection;
-
-// mongoose.connect('mongodb://127.0.0.1:27017/meanjwt').catch();
-
-bd.on('connected',()=>{
-    winston.log('info','Realizada conexión a bd ' + bd.name + '(' + '_readyState: ' + bd._readyState + ')');
-});
-
-bd.on('connecting', ()=>{
-    winston.log('info','Intentando conectar a bd ' + bd.name);
-})
-
-bd.on('disconnected',()=>{
-    winston.log('warn','Se ha perdido la conexión a bd ' + bd.name);
-});
-
-bd.on('reconnected',()=>{
-    winston.log('info','Se ha recuperado la conexión a bd ' + bd.name);
-})
-
-bd.on('error',()=>{
-    winston.log('error','Se ha producido un error');
-})
-
-
-var mongoUrl = 'mongodb://127.0.0.1:27017/meanjwt';
-
-var connectWithRetry = function() {
-    return mongoose.connect(mongoUrl, function(err) {
-        if (err) {
-            console.error('Failed to connect to mongo on startup - retrying in 5 sec');
-            setTimeout(connectWithRetry, 5000);
+/**
+ * Conexión a la base de datos. Con gestión de error de conexión inicial o posteriores.
+ * @param dbURL
+ * @param options
+ * @returns {Connection}
+ */
+function createConnection (dbURL, options) {
+    var db = mongoose.createConnection(dbURL, options);
+    db.on('error', function (err) {
+            if (err.message && err.message.match(/failed to connect to server .* on first connect/)) {
+                setTimeout(function () {
+                winston.log('warn', 'Reintentando primera conexión a bd...');
+                db.openUri(dbURL).catch(() => {});
+            }, 20 * 1000);
+        } else {
+            winston.log('error','Error en conexión a MongoDB')
         }
-    }).catch();
-};
-connectWithRetry().catch();
+    });
+    db.on('disconnected',()=>{
+        winston.log('warn','No hay conexión a la bd ' + db.name);
+    });
+
+    db.on('reconnected',()=>{
+        winston.log('warn','Se ha recuperado la conexión a bd ' + db.name);
+    })
+
+    db.once('open', ()=>{
+        winston.log('info','Establecida conexión con la base de datos ' + db.name);
+    });
+    return db;
+}
+
+// Conexión a la base de datos.
+var db = createConnection(config.mongo.dbUrl, config.mongo.dbOptions)
+    .catch((err)=>{
+        winston.log('warn','El primer intento de conexión a la bd ha fallado. Se reintentará cada 20 segundos.')
+    });
 
 
-// // Conexión con mongo y luego activación de express. //
-// connect()
-//     .then(
-//         (bd)=>{
-//             winston.log('info','Realizada conexión a bd ' + bd.connections[0].name);
-//             // debug('Realizada conexión a bd ' + bd.connections[0].name)
-//             //listen();
-//         },
-//         (error)=>{
-//             winston.log('error','Error al intentar conectar con la bd: ' + error.message );
-//             //debug('Error al intentar conectar con la bd ' + config.mongo.dbOptions.dbName' + ': ' + error.message );
-//
-//         }).catch();
-//
-// connect.on('disconnected',()=>{
-//     winston.log('warn','Se ha perdido la conexión con la bd.');
-//     setTimeout(
-//         ()=>connect(),
-//         3000
-//     )
-// })
-//
-// /**
-//  * Realiza la conexión con la base de datos con las opciones de config
-//  * @returns {Promise}
-//  */
-// function connect(){
-//     return mongoose.connect(config.mongo.dbUrl, config.mongo.dbOptions);
-// }
-//
-// /**
-//  * Activa express en el puerto establecido en config
-//  */
-// function listen(){
-//     if (app.get('env') === 'test') return;
-//     app.listen(config.express.port);
-//     winston.log('info',config.express.ok + config.express.port);
-//     debug(config.express.ok + config.express.port)
-// }
