@@ -20,6 +20,8 @@ var mongoose = require('mongoose');
 // Carga la configuración global
 const config = require('./configuracion');
 
+// Carga la app express
+var app = require('./app');
 
 /**
  * Configuración de Winston (registro)
@@ -51,6 +53,7 @@ winston.configure({
 function createConnection (dbURL, options) {
     var db = mongoose.createConnection(dbURL, options);
     db.on('error', function (err) {
+            config.mongo.operativo = false;
             if (err.message && err.message.match(/failed to connect to server .* on first connect/)) {
                 setTimeout(function () {
                 winston.log('warn', 'Reintentando primera conexión a bd...');
@@ -61,14 +64,17 @@ function createConnection (dbURL, options) {
         }
     });
     db.on('disconnected',()=>{
+        config.mongo.operativo = false;
         winston.log('warn','No hay conexión a la bd ' + db.name);
     });
 
     db.on('reconnected',()=>{
+        config.mongo.operativo = true;
         winston.log('warn','Se ha recuperado la conexión a bd ' + db.name);
     })
 
     db.once('open', ()=>{
+        config.mongo.operativo = true;
         winston.log('info','Establecida conexión con la base de datos ' + db.name);
     });
     return db;
@@ -76,6 +82,11 @@ function createConnection (dbURL, options) {
 
 // Conexión a la base de datos.
 var db = createConnection(config.mongo.dbUrl, config.mongo.dbOptions)
+    .then(
+        app.listen(config.express.port, ()=>{
+            winston.log('info','Servidor operativo en puerto ' + config.express.port);
+        })
+    )
     .catch((err)=>{
         winston.log('warn','El primer intento de conexión a la bd ha fallado. Se reintentará cada 20 segundos.')
     });

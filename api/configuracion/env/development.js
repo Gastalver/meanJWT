@@ -12,9 +12,10 @@ module.exports = {
             reconnectInterval: 1000,
             promiseLibrary: Promise
         },
+        operativo: false
 
     },
     express: {
-        port: 4000,
+        port: 3800,
     }
 }

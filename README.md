@@ -23,8 +23,12 @@ Estructura básica de una **aplicación web** basada en MongoDB, Express, Angula
 * [**`requirejs`**]() Para probar métodos que impliquen HTTP en las especificaciones.
 * [**`karma-coverage`**](https://www.npmjs.com/package/karma-coverage) Para saber qué porcentaje del código está cubierto por los tests.
 ### Consideraciones generales
+#### Idioma español
+Todas las variables, funciones etc... se denominan en español. Sin más pretensiones. Es una opción personal.
+
 #### Modo estricto
 * `use strict` Se utiliza el modo estricto para forzar excepciones en todos los errores y que no pasen desapercibidos; por velocidad de ejecución (es optimizado mejor), y como transición a las futuras versiones de ECMAScript. 
+
 #### Configuración mediante un objeto
 Se propone agrupar en la medida de lo posible toda la configuración general de la API en un objeto config. que se genera además de forma condicional según cual sea el valor de la variable de entorno NODE_ENV. Para ello, desde /configuracion/index.js, primero se importan tres módulos distintos, uno para development, otro para production y otro para test, cada uno de los cuales consiste en un objeto con las propiedades de configuración correspondientes a cada entorno, y se guardan en variables con su mismo nombre; luego index.js exporta un objeto al que se asignan las anteriores propiedades, pero sólo del objeto cuyo nombre coincida con el de la variable NODE_ENV, y además las propiedades de los demás objetos que se incluyan en index.js como contenedores de otras opciones de configuración. Esto se logra con esta técnica:
 
@@ -45,6 +49,18 @@ require('dotenv').config();
 ```
 
 A la hora de establecer las variables de entorno por medio de la línea de comandos, la notación de los sistemas Windows es distinta a la de los sistemas POSIX. Proponemos un módulo útil, crossenv, que permite la carga de variables de entorno desde un script en package.json, sin tener que preocuparnos de la notación del sistema de destino. Lo utilizamos únicamente para establecer la variable process.env.NODE_ENV a 'development'.
+
+#### Reconexión automática de Mongoose
+En `index.js` se configura mongoose para reconectar automáticamente tanto si falla la primera conexión como si con posterioridad a haber realizado la primera conexión se pierde. Se distinguen ambos supuestos porque MongoDB los distingue.
+Se crea la propiedad `config.mongo.operativo` con valor true/false dependiendo de que haya conexión a la base de datos no.
+El primer middleware de express comprueba que hay conexión a la base de datos y si no la hay, envia un error 503 con un mensaje.
+
+#### Arquitectura MVC
+Utilizamos el patrón de diseño de software MVC. Separamos modelos, controladores y vistas. En principio la API no genera vistas. Todas sus respuestas son objectos JSON. Las vistas se generan en el cliente Angular.
+
+#### Res.mensaje
+Se propone la convención de que el objeto de respuesta JSON, si no devuelve lo esperado, contenga siempre una propiedad `res.mensaje` explicando lo sucedido.
+
 ### Test de la API.
 * Se utiliza `karma` con `jasmin` para facilitar la metodología de trabajo **[Behavior Driven Development](https://en.wikipedia.org/wiki/Behavior-driven_development)**.
 
