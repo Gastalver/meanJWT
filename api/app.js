@@ -11,7 +11,7 @@ var app = express();
 
 
 // Cargamos las rutas.
-
+var rutasUsuario = require('./rutas/usuario');
 
 // MIDDLEWARE
 // bodyParser.urlencoded para parsear bodies que vengan en formato urlenconded, es decir, de un formulario.
@@ -33,6 +33,8 @@ app.use((req,res,next)=>{
 
 
 // rutas
+app.use('/api',rutasUsuario);
+
 
 // exportar
 module.exports = app;
