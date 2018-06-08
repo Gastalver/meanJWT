@@ -1,6 +1,5 @@
 'use strict'
 
-
 // Dependencias
 const path = require('path');
 var winston = require('winston');

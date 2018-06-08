@@ -2,6 +2,7 @@
 
 var mongoose=require('mongoose');
 var Schema = mongoose.Schema;
+var db = require('../index');
 
 var UsuarioSchema = Schema({
     nombre: String,

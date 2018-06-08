@@ -22,6 +22,8 @@ Estructura básica de una **aplicación web** basada en MongoDB, Express, Angula
 * [**`karma-requirejs`**]() Para poder usar `requirejs` en `karma`. 
 * [**`requirejs`**]() Para probar métodos que impliquen HTTP en las especificaciones.
 * [**`karma-coverage`**](https://www.npmjs.com/package/karma-coverage) Para saber qué porcentaje del código está cubierto por los tests.
+* [**`jsdoc`**](https://www.npmjs.com/package/jsdoc) Para generar automáticamente documentación en formato HTML desde comentarios. 
+* [**`jsdoc-http-plugin`**](https://www.npmjs.com/package/jsdoc-http-plugin) Para añadir etiquetas de ruta a jsdoc.
 ### Consideraciones generales
 #### Idioma español
 Todas las variables, funciones etc... se denominan en español. Sin más pretensiones. Es una opción personal.
@@ -64,3 +66,6 @@ Se propone la convención de que el objeto de respuesta JSON, si no devuelve lo 
 ### Test de la API.
 * Se utiliza `karma` con `jasmin` para facilitar la metodología de trabajo **[Behavior Driven Development](https://en.wikipedia.org/wiki/Behavior-driven_development)**.
 
+### Documentación de la API
+* Se genera con el script `doc` de package.json. Desde el terminal, estando en /api, teclear `npm doc`. Utiliza el módulo `jsdoc` con un plugin que permite añadir algunas etiquetas relativas a rutas. Sólo documentamos las rutas. La documentación generada se encuentra en la carpeta `\out` que se puede examinar a partir del archivo `index.html`
+Otra alternativa interesante para documentar la API es el módulo `swagger-jsdoc`, por si se quiere probar. 

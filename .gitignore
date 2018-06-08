@@ -2,5 +2,7 @@
 api/node_modules/
 api/package-lock.json
 api/logs/
-/api/.env
+api/.env
+api/out/
+api/out/
 /api/out/

@@ -8,9 +8,9 @@ module.exports = {
     mongo: {
         dbUrl: process.env.MONGODB_URL,
         dbOptions: {
-            autoReconnect: true,
-            reconnectInterval: 1000,
-            promiseLibrary: Promise
+            // autoReconnect: true,
+            // reconnectInterval: 1000,
+            // promiseLibrary: Promise
         },
         operativo: false
 

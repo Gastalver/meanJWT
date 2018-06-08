@@ -19,13 +19,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 // bodyParser.json para parsear bodies que vengan en formato json.
 app.use(bodyParser.json());
 //Comprueba si hay conexión a la bd o no. Si no hay, no gestiona la petición. Devuelve un código 503 y un mensaje de error.
-app.use((req,res,next)=>{
-    if (config.mongo.operativo){
-        next();
-    } else {
-        res.status(503).send({mensaje: 'Servicio no disponible en este momento. Intentelo pasados unos segundos.'})
-    }
-})
+// app.use((req,res,next)=>{
+//     if (config.mongo.operativo){
+//         next();
+//     } else {
+//         res.status(503).send({mensaje: 'Servicio no disponible en este momento. Intentelo pasados unos segundos.'})
+//     }
+// })
 
 
 
