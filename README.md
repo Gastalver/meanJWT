@@ -4,7 +4,7 @@ Estructura básica de una **aplicación web** basada en MongoDB, Express, Angula
 ### Módulos utilizados y razón para ello.
 * [**`express`**](https://www.npmjs.com/package/express) Framework para gestionar la comunicación con el cliente por medio de HTTP(`request` y `response`) así como el middleware.
 * [**`body-parser`**](https://www.npmjs.com/package/body-parser) Middleware para convertir el `body` de un `request HTTP` en un objeto Javascript disponible en `request.body`. En el protocolo HTTP el `body` de un `request` tiene el interface `ReadableStream` y puede contener de todo. `body-parser` reconoce y transforma (parsea) streams cuyo contenido sea del tipo JSON, Raw, Text, o URL-enconded form. No parsea streams de multipart/form-data, es decir, archivos. 
-* [**`multiparty`**](https://www.npmjs.com/package/multiparty) Middleware para parsear el `body` de `request` con contenidos del tipo multipart/form-data, es decir, archivos.
+* [**`multer`**](https://www.npmjs.com/package/multer) Middleware para parsear el `body` de `request` con contenidos del tipo multipart/form-data, es decir, archivos.
 * [**`mongoose`**](https://www.npmjs.com/package/mongoose) Para modelar como objetos javscript los documentos de la base de datos MongoDB y operar con ellos de una forma asíncrona.
 * [**`winston`**](https://www.npmjs.com/package/winston) Para guardar un registro (log) de lo que sucede en el servidor.
 * [**`bcrypt-nodejs`**](https://www.npmjs.com/package/bcrypt-nodejs) Para cifrar contraseñas. Preferido a otros porque no requiere instalar ningún SDK para compilarlo ya que está desarrollado íntegramente en Javascript.
@@ -59,6 +59,12 @@ El primer middleware de express comprueba que hay conexión a la base de datos y
 
 #### Arquitectura MVC
 Utilizamos el patrón de diseño de software MVC. Separamos modelos, controladores y vistas. En principio la API no genera vistas. Todas sus respuestas son objectos JSON. Las vistas se generan en el cliente Angular.
+
+#### Diseño de la autenticación
+* El primer paso es usar la ruta /api/acceso para facilitar el email y la clave y añadir en el body la propiedad recibirToken. Si ambos son correctos, se envía un token que contiene los datos del usuario codificados, su _id, nombre, apellidos, apodo, email, rol e imagen, así como la fecha de generación del token y la de expiración (hemos puesto 30 días, configúrese a voluntad).
+* En las subsiguientes llamadas a rutas que requieren autenticación, el cliente debe añadir el token en una cabecera HTTP "Authorization".
+* En las rutas que exigen autenticación se usa un middleware específico de autenticación que comprueba si se ha enviado la cabecera 'Authorization', en caso afirmativo decodifica el token, del que extrae los datos de usuario y los guarda en `req.usuario` para que estén disponibles para el handler de la ruta como datos de usuario autenticado.
+* Dado que el token está codificado, salvo que sea verdadero producirá un error en el middleware al ser descodificado, lo que impide el paso al handler. Se devuelve un error de falta de autenticación. 
 
 #### Res.mensaje
 Se propone la convención de que el objeto de respuesta JSON, si no devuelve lo esperado, contenga siempre una propiedad `res.mensaje` explicando lo sucedido.

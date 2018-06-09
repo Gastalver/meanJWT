@@ -9,6 +9,12 @@
 var express=require('express');
 var controladorUsuario = require('../controladores/usuario');
 
+//Middleware
+var md_aut = require('../middleware/autenticado');
+var multer = require('multer');
+var upload = multer({dest: 'uploads/usuarios'})
+
+
 // Creamos un router
 var api = express.Router();
 
@@ -34,7 +40,7 @@ api.get('/inicio',controladorUsuario.inicio);
  * @response {String} mensaje
  * @auth No requiere autenticación
  */
-api.get('/prueba',controladorUsuario.prueba);
+api.get('/prueba',md_aut.compruebaAutenticacion, controladorUsuario.prueba);
 
 
 /**
@@ -69,6 +75,8 @@ api.get('/prueba',controladorUsuario.prueba);
  */
 api.post('/registro',controladorUsuario.registrarUsuario);
 
+
+
 /**
  * Autenticación de un usuario. Si en el body se envía solo email y clave se devuelven los datos del usuario,
  * si se añade la propiedad enviarToken, se recibe el token JWT de ese usuario, necesario para autenticarse y acceder.
@@ -100,7 +108,41 @@ api.post('/registro',controladorUsuario.registrarUsuario);
 api.post('/acceso',controladorUsuario.autenticarUsuario);
 
 
+/**
+ * Actualización de los datos de un usuario.
+ *
+ * @name actualizacionUsuario
+ * @path {PUT} /actualizar-usuario/:id
+ * @auth Requiere token
+ * @header {String} Authorization El token del usuario.
+ * @params {String} :id Id del usuario a actualizar.
+ * @body {string} nombre El nombre del usuario, actualizado, en su caso.
+ * @body {string} apellidos Los apellidos del usuario, , actualizados en su caso.
+ * @body {string} apodo El nombre de usuario, apodo o nickname del usuario, , actualizado en su caso.
+ * @body {string} email El email del usuario, actualizado, en su caso.
+ * @body {string} [rol=ROL_USUARIO] El rol del usuario, actualizado en su caso
+ * @code {200} Si el usuario se actualiza correctamente.
+ * @code {200} Si se ha recibido la petición pero faltan datos. o el usuario está duplicado.
+ * @code {200} Si se ha recibido la petición pero el usuario está duplicado.
+ * @code {500} Si hay un error al comprobar duplicados.
+ * @code {500} Si hay un error al intentar guardar el nuevo usuario en la bd y no se guarda.
+ * @code {404} Si no existe un usuario con el email especificado.
+ * @response {object} response {}
+ * @response {object} response.usuario El usuario actualizado. En formato JSON.
+ * @response {string} response.usuario._id El ObjectId del documento en Mongo
+ * @response {string} response.usuario.nombre El nombre del usuario actualizado.
+ * @response {string} response.usuario.apellidos Los apellidos del usuario actualizado.
+ * @response {string} response.usuario.apodo El usuario, apodo o nickname del usuario actualizado.
+ * @response {string} response.usuario.email El nombre del usuario actualizado.
+ * @response {string} response.usuario.rol El nombre del usuario actualizado.
+ * @response {string} response.usuario.image El archivo de imagen del usuario creado.
+ */
+api.put('/actualizar-usuario/:id',md_aut.compruebaAutenticacion,controladorUsuario.actualizarUsuario);
 
+
+
+
+api.post('/subir-imagen-usuario/:id',[md_aut.compruebaAutenticacion, upload.single('imagenUsuario')],controladorUsuario.subirImagenUsuario);
 
 
 module.exports = api;

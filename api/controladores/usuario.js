@@ -21,7 +21,8 @@ function prueba (req,res){
     res.status(200).send({mensaje: 'Prueba del handler /prueba'})
 }
 
-// Handler de la ruta POST /registro
+// Registro de Usuario
+// Handler de la ruta POST /registro.
 function registrarUsuario(req,res){
     let enBody = req.body;
     let usuario = new Usuario();
@@ -72,6 +73,7 @@ function registrarUsuario(req,res){
     }
 }
 
+// Login de Usuario
 // Handler de la ruta POST /acceso
 function autenticarUsuario(req,res){
     var reqBody = req.body;
@@ -120,10 +122,67 @@ function autenticarUsuario(req,res){
 
 }
 
+// Actualizar datos de Usuario
+// Handler de la ruta PUT /actualizar-usuario
+function actualizarUsuario(req,res){
+    var idUsuario= req.params.id;
+    var actualizacion = req.body;
+    // borramos la propiedad clave
+    delete actualizacion.clave;
+    if(idUsuario !== req.usuario.sub){
+        return res.status(500).send({mensaje:'No tienes permisos para actualizar los datos del usuario.'});
+    }
+    // Comprobar si la modificación propuesta ya existe en otro usuario
+    Usuario.find({$or: [
+            {email: actualizacion.email.toLowerCase()},
+            {nick: actualizacion.apodo.toLowerCase()}
+        ]}).exec((err,usuarios)=>{
+        var enUso = false;
+        usuarios.forEach((usuario)=>{
+            if (usuario && usuario._id != idUsuario) enUso = true;
+        });
+
+        if (enUso) {
+            return res.status(404).send({mensaje:'Los datos ya están en uso.'});
+        }
+
+        Usuario.findByIdAndUpdate(idUsuario, actualizacion,{new:true},(err,usuarioActualizado)=>{
+            if(err) return res.status(500).send({mensaje:'Error en la petición.'});
+            if(!usuarioActualizado) return res.status(404).send({mensaje:'No se ha podido actualizar el usuario.'});
+            usuarioActualizado.clave = undefined;
+            return res.status(200).send({usuario:usuarioActualizado});
+        })
+    });
+
+
+
+
+
+}
+
+
+// Subir Imagen
+// Handler de la ruta POST / subir-imagen-usuario
+function subirImagenUsuario(req,res){
+    var idUsuario = req.params.id;
+    if (idUsuario != req.usuario.sub) return res.status(403).send({mensaje: 'No está autorizado a modificar la imagen de otro usuario.'})
+    if( req.file ){
+        debug('Recibido req.file: ' + JSON.stringify(req.file) );
+        return res.status(200).send({mensaje: JSON.stringify(req.file)});
+
+
+    } else {
+        return res.status(204).send({mensaje:'No se ha enviado ninguna imagen.'});
+    }
+}
+
+
 
 module.exports = {
     inicio,
     prueba,
     registrarUsuario,
-    autenticarUsuario
+    autenticarUsuario,
+    actualizarUsuario,
+    subirImagenUsuario
 }
