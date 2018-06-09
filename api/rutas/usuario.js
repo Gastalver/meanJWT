@@ -78,7 +78,7 @@ api.post('/registro',controladorUsuario.registrarUsuario);
  * @auth Requiere email y clave
  * @body {string} email Email del usuario registrado.
  * @body {string} clave Clave del usuario registrado.
- * @body {string} [enviarToken=''] Si se incluye se recibe un token JWT para autenticación, no el usuario.
+ * @body {string} [recibirToken=null] Si se incluye se recibe un token JWT para autenticación, no el usuario.
  * @code {200} Si el usuario se crea correctamente.
  * @code {200} Si se ha recibido la petición pero faltan datos. o el usuario está duplicado.
  * @code {200} Si se ha recibido la petición pero el usuario está duplicado.
