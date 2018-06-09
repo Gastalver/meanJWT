@@ -67,5 +67,5 @@ Se propone la convención de que el objeto de respuesta JSON, si no devuelve lo 
 * Se utiliza `karma` con `jasmin` para facilitar la metodología de trabajo **[Behavior Driven Development](https://en.wikipedia.org/wiki/Behavior-driven_development)**.
 
 ### Documentación de la API
-* Se genera con el script `doc` de package.json. Desde el terminal, estando en /api, teclear `npm doc`. Utiliza el módulo `jsdoc` con un plugin que permite añadir algunas etiquetas relativas a rutas. Sólo documentamos las rutas. La documentación generada se encuentra en la carpeta `\out` que se puede examinar a partir del archivo `index.html`
+* Se genera con el script `doc` de package.json. Desde el terminal, estando en /api, teclear `npm doc`. Utiliza el módulo `jsdoc` con un plugin que permite añadir algunas etiquetas relativas a rutas. Sólo documentamos las rutas. La documentación generada se encuentra en la carpeta `api\documentacion` que se puede examinar a partir del archivo `index.html`
 Otra alternativa interesante para documentar la API es el módulo `swagger-jsdoc`, por si se quiere probar. 

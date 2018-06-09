@@ -6,7 +6,7 @@
   "scripts": {
     "start": "./node_modules/.bin/cross-env NODE_ENV=development ./node_modules/nodemon/bin/nodemon.js ./index.js",
     "test": "./node_modules/.bin/cross-env NODE_ENV=test ./node_modules/jasmine/bin/jasmine.js",
-    "doc": "./node_modules/.bin/jsdoc -c ./jsdoc.conf --package ./package.json"
+    "doc": "./node_modules/.bin/jsdoc -c ./jsdoc.conf --package ./package.json -d ./documentacion"
   },
   "repository": {
     "type": "git",
