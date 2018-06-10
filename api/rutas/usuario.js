@@ -153,22 +153,22 @@ api.put('/usuarios/:id',md_aut.compruebaAutenticacion,controladorUsuario.actuali
  * @code {401} Si el id y el token no son del mismo usuario.
  * @code {422} Si no se ha enviado ningún archivo de imagen, al ser obligatorio.
  * @code {422} Si se ha enviado un tipo de archivo no admitido.
- * @code {406} Si el email o el apodo a actualizar ya están en uso por otro usuario.
- * @code {500} Si hay un error al comprobar duplicados.
- * @code {500} Si hay un error al intentar actualizar el nuevo usuario en la bd.
- * @code {500} Si hay un error al intentar recuperar  el usuario actualizado y no se encuentra.
- * @code {200} Si la actualización concluye correctamente y se envían los datos del usuario actualizado.
+ * @code {500} Error al guardar imagen. Interno del Servidor.
+ * @code {500} Error al borrar imagen no admitida. Interno del Servidor.
+ * @code {200} Si la subida de imagen concluye correctamente y se envían los datos del usuario actualizado.
  * @response {object} response {}
  * @response {object} response.usuario El usuario actualizado. En formato JSON.
  * @response {string} response.usuario._id El ObjectId del documento en Mongo
  * @response {string} response.usuario.nombre El nombre del usuario actualizado.
  * @response {string} response.usuario.apellidos Los apellidos del usuario actualizado.
  * @response {string} response.usuario.apodo El usuario, apodo o nickname del usuario actualizado.
- * @response {string} response.usuario.email El nombre del usuario actualizado.
- * @response {string} response.usuario.rol El nombre del usuario actualizado.
+ * @response {string} response.usuario.email El email del usuario actualizado.
+ * @response {string} response.usuario.rol El rol del usuario actualizado.
  * @response {string} response.usuario.image El archivo de imagen del usuario actualizado.
  */
 api.post('/usuarios/:id/imagen',[md_aut.compruebaAutenticacion, upload.single('imagenUsuario')],controladorUsuario.subirImagenUsuario);
+
+api.get('/usuarios/imagen/:archivo',md_aut.compruebaAutenticacion,controladorUsuario.obtenerImagenUsuario);
 
 
 module.exports = api;
