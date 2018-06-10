@@ -4,6 +4,7 @@
 var winston = require('winston');
 var debug = require('debug')('usuario');
 var bcrypt = require('bcrypt-nodejs');
+var fs = require('fs');
 
 // Servicios
 var jwt = require('../servicios/jwt');
@@ -127,37 +128,38 @@ function autenticarUsuario(req,res){
 function actualizarUsuario(req,res){
     var idUsuario= req.params.id;
     var actualizacion = req.body;
-    // borramos la propiedad clave
-    delete actualizacion.clave;
-    if(idUsuario !== req.usuario.sub){
-        return res.status(500).send({mensaje:'No tienes permisos para actualizar los datos del usuario.'});
-    }
-    // Comprobar si la modificación propuesta ya existe en otro usuario
-    Usuario.find({$or: [
-            {email: actualizacion.email.toLowerCase()},
-            {nick: actualizacion.apodo.toLowerCase()}
-        ]}).exec((err,usuarios)=>{
-        var enUso = false;
-        usuarios.forEach((usuario)=>{
-            if (usuario && usuario._id != idUsuario) enUso = true;
-        });
-
-        if (enUso) {
-            return res.status(404).send({mensaje:'Los datos ya están en uso.'});
+    // Comprobamos que se han enviado los campos obligatorios email y apodo
+    if (actualizacion && actualizacion.apodo && actualizacion.email){
+        // borramos la propiedad clave
+        delete actualizacion.clave;
+        if(idUsuario !== req.usuario.sub){
+            return res.status(401).send({mensaje:'No tienes permisos para actualizar los datos del usuario.'});
         }
+        // Solo comprobamos si hay duplicados de email o apodoComprobar si la modificación propuesta ya existe en otro usuario
+        Usuario.find({$or: [
+                {email: actualizacion.email.toLowerCase()},
+                {apodo: actualizacion.apodo.toLowerCase()}
+            ]}).exec((err,usuarios)=>{
+            if(err)res.status(500).send({mensaje: "Error del Servidor al comprobar duplicados."})
+            var enUso = false;
+            usuarios.forEach((usuario)=>{
+                if (usuario && usuario._id != idUsuario) enUso = true;
+            });
 
-        Usuario.findByIdAndUpdate(idUsuario, actualizacion,{new:true},(err,usuarioActualizado)=>{
-            if(err) return res.status(500).send({mensaje:'Error en la petición.'});
-            if(!usuarioActualizado) return res.status(404).send({mensaje:'No se ha podido actualizar el usuario.'});
-            usuarioActualizado.clave = undefined;
-            return res.status(200).send({usuario:usuarioActualizado});
-        })
-    });
+            if (enUso) {
+                return res.status(406).send({mensaje:'Los datos ya están en uso. No se pueden duplicar.'});
+            }
 
-
-
-
-
+            Usuario.findByIdAndUpdate(idUsuario, actualizacion,{new:true},(err,usuarioActualizado)=>{
+                if(err) return res.status(500).send({mensaje:'Error en la petición.'});
+                if(!usuarioActualizado) return res.status(500).send({mensaje:'No se ha podido actualizar el usuario.'});
+                usuarioActualizado.clave = undefined;
+                return res.status(200).send({usuario:usuarioActualizado});
+            })
+        });
+    }else{
+        res.status(422).send({mensaje:"El campo email y el campo apodo son necesarios."})
+    }
 }
 
 
@@ -165,18 +167,48 @@ function actualizarUsuario(req,res){
 // Handler de la ruta POST / subir-imagen-usuario
 function subirImagenUsuario(req,res){
     var idUsuario = req.params.id;
-    if (idUsuario != req.usuario.sub) return res.status(403).send({mensaje: 'No está autorizado a modificar la imagen de otro usuario.'})
-    if( req.file ){
-        debug('Recibido req.file: ' + JSON.stringify(req.file) );
-        return res.status(200).send({mensaje: JSON.stringify(req.file)});
-
-
+    var extension = null;
+    var archivoConExtension = null;
+    var rutaConExtension = null;
+    // Comprobamos que se ha subido al menos una imagen.
+    if(req.file != undefined){
+        // Comprobamos que se pretende subir imagen del usuario logueado.
+        if (idUsuario != req.usuario.sub){
+            fs.unlink(req.file.path,(error)=> {
+                if(error) return res.status(500).send({mensaje:'Error  interno del Servidor'});
+                return res.status(401).send({mensaje: 'No está autorizado a modificar la imagen de otro usuario.'});
+            });
+        }else{
+            // Comprobamos que el archivo es del tipo autorizado.
+            if (!req.file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+                fs.unlink(req.file.path,(error)=>{
+                    if(error) return res.status(500).send({mensaje:'Error  interno del Servidor'});
+                    return res.status(422).send({mensaje:"El archivo es de un tipo no admitido."});
+                })
+            }else {
+                // Es un archivo válido. Obtenemos su extensión.
+                var extension = req.file.originalname.split('.')[1]; //TODO evitar problemas si el nombre tiene más de un punto.
+                // Añadimos la extensión al nombre de archivo ya subido.
+                var archivoConExtension = req.file.filename + '.' + extension;
+                var rutaConExtension = req.file.path + '.' + extension;
+                //Renombramos el archivo subido para añadirle la extensión (Multer no lo hace automaticamente)
+                fs.rename(req.file.path,rutaConExtension,(error)=> {
+                    if (error) return res.status(500).send({mensaje: 'Error  interno del Servidor'});
+                    // Se han superado todos los controles y se ha preparado el archivo. Guardamos la imagen.
+                    Usuario.findByIdAndUpdate(idUsuario, {imagen: archivoConExtension}, {new: true}, (err, usuarioActualizado) => {
+                        if (err) return res.status(500).send({mensaje: 'Error  interno del Servidor.'});
+                        if (!usuarioActualizado) return res.status(500).send({mensaje: 'Error interno del Servidor'});
+                        usuarioActualizado.clave = undefined;
+                        winston.log('info','Subida imagen de usuario ' + usuarioActualizado.nombre + ' ' + usuarioActualizado.apellidos + ': ' + archivoConExtension );
+                        return res.status(200).send({usuario: usuarioActualizado});
+                    });
+                });
+            }
+        }
     } else {
-        return res.status(204).send({mensaje:'No se ha enviado ninguna imagen.'});
+        return res.status(422).send({mensaje:'No se ha enviado ninguna imagen.'});
     }
 }
-
-
 
 module.exports = {
     inicio,

@@ -7,7 +7,7 @@ var secreto = process.env.SECRET_TOKEN;
 
 exports.compruebaAutenticacion = function (req,res,next){
     if(!req.headers.authorization){
-        return res.status(403).send({mensaje: 'La petición no tiene la cabecera de autenticación'});
+        return res.status(401).send({mensaje: 'La petición no tiene la cabecera de autenticación'});
     }
     var token = req.headers.authorization.replace(/['"]+/g,''); // Esto es para quitar las comillas del token antes de evaluarlo.
     // Usamos try/catch porque jwt es muy sensible a errores.
