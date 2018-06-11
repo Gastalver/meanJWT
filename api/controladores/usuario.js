@@ -6,6 +6,7 @@ var debug = require('debug')('usuario');
 var bcrypt = require('bcrypt-nodejs');
 var fs = require('fs');
 var path = require('path');
+var config = require('../configuracion')
 
 // Servicios
 var jwt = require('../servicios/jwt');
@@ -213,13 +214,13 @@ function subirImagenUsuario(req,res){
 
 function obtenerImagenUsuario(req,res){
     var archivo = req.params.archivo;
-    var rutaImagenUsuario = 'uploads/usuarios/' + archivo;
+    var rutaImagenUsuario = config.multer.dirImagenesUsuarios + '/'+ archivo;
     fs.exists(rutaImagenUsuario,(existe)=>{
         if(existe){
             winston.log('info','Descargada imagen de usuario de ' + req.usuario.nombre + ' ' + req.usuario.apellidos);
             res.sendFile(path.resolve(rutaImagenUsuario));
         } else {
-            res.status(200).send({mensaje1:'No existe la imagen'});
+            res.status(404).send({mensaje:'No existe el archivo solicitado.'});
         }
     })
 }

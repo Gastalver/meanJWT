@@ -17,5 +17,8 @@ module.exports = {
     },
     express: {
         port: 3800,
+    },
+    multer: {
+        dirImagenesUsuarios: 'uploads/usuarios'
     }
 }

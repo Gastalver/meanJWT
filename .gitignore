@@ -9,3 +9,4 @@ api/out/
 /api/documentacion/
 /api/uploads/
 /api/httpReqApi.http
+/cliente/node_modules/
