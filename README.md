@@ -52,6 +52,12 @@ require('dotenv').config();
 
 A la hora de establecer las variables de entorno por medio de la línea de comandos, la notación de los sistemas Windows es distinta a la de los sistemas POSIX. Proponemos un módulo útil, crossenv, que permite la carga de variables de entorno desde un script en package.json, sin tener que preocuparnos de la notación del sistema de destino. Lo utilizamos únicamente para establecer la variable process.env.NODE_ENV a 'development'.
 
+**El repositorio no contiene ningún archivo `.env`. Hay que crearlo en cada instalación.** Debe contener como mínimo las variables que se indican a continuación, de lo contrario el Servidor no podrá funcionar correctamente, fallará la conexión a la base de datos o fallará la creación de tokes, etc.:
+```Javascript
+MONGODB_URL = mongodb://127.0.0.1:27017/nombreBd
+SECRET_TOKEN = PalabraSecretaConLaQueSeGeneranTokens
+```
+
 #### Reconexión automática de Mongoose
 En `index.js` se configura mongoose para reconectar automáticamente tanto si falla la primera conexión como si con posterioridad a haber realizado la primera conexión se pierde. Se distinguen ambos supuestos porque MongoDB los distingue.
 Se crea la propiedad `config.mongo.operativo` con valor true/false dependiendo de que haya conexión a la base de datos no.

@@ -10,3 +10,4 @@ api/out/
 /api/uploads/
 /api/httpReqApi.http
 /cliente/node_modules/
+/api/httpRequestAPI.http
