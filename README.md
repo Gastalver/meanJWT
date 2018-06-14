@@ -80,4 +80,19 @@ Se propone la convención de que el objeto de respuesta JSON, si no devuelve lo 
 
 ### Documentación de la API
 * Se genera con el script `doc` de package.json. Desde el terminal, estando en /api, teclear `npm doc`. Utiliza el módulo `jsdoc` con un plugin que permite añadir algunas etiquetas relativas a rutas. Sólo documentamos las rutas. La documentación generada se encuentra en la carpeta `api\documentacion` que se puede examinar a partir del archivo `index.html`
-Otra alternativa interesante para documentar la API es el módulo `swagger-jsdoc`, por si se quiere probar. 
+Otra alternativa interesante para documentar la API es el módulo `swagger-jsdoc`, por si se quiere probar.
+
+ ## CLIENTE
+ ### Módulos utilizados y razón para ello.
+ Aparte de todos los módulos que instala `angular-cli` por defecto instalamos los siguientes:
+ * [**`bootstrap`**](https://www.npmjs.com/package/bootstrap) Como framework CSS. Sólo utilizamos los estilos, que se importan desde `angular.json`.
+ * [**`@ng-bootstrap`**](https://www.npmjs.com/package/@ng-bootstrap/ng-bootstrap) Directivas Angular que sustituyen a los componentes Bootstrap y hacen innecesario bootstrap.js. 
+ * [**`picturefill`**](https://www.npmjs.com/package/picturefill) Polifill para poder usar el elemento `<picture>` de HTML5 en IE10 y 11. Lo usamos en el Carousel del componente landing page. Se importa luego desde `polyfills.ts`. 
+ * [**``**]() Para .
+
+### Comentarios
+#### Carousel. 
+El carousel en landing page resuelve un problema muy común en Bootstrap, que las imagenes sean responsive. Además se optimiza para que cargue una imagen de un tamaño adecuado al tamaño de pantalla del agente.
+Implementamos esta solución comentada en [BootstrapCreative](Luego crea las fotografías.). 
+Es prescindible, desde luego. Se podría también eliminar el módulo picturefill. Esta es solo una propuesta de landing page.
+ 
