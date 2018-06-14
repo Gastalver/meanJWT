@@ -1,0 +1,7 @@
+/*
+Forces carousel image to be 100% width and not max width of 100%
+*/
+.imagen-fluida {
+  width:100%!important;
+  height:100%!important;
+}

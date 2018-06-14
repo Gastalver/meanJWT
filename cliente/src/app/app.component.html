@@ -1,9 +1,30 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark navbar-expand-md">
+  <!--Logotipo y Marca-->
   <a class="navbar-brand" href="#">
-    <img src="../assets/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-    Proyecto
+    <img src="../assets/logo30x30.gif" width="30" height="30" class="d-inline-block align-top" alt="">
+    {{titulo}}
   </a>
+  <!--Menu-->
+  <div class="navbar-nav"></div>
+  <!--Menu colapsable-->
+  <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div [ngbCollapse]="!isCollapsed" class="collapse navbar-collapse">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#"> Inicio <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"> Servicio</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"> Precio</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#"> Quiénes somos</a>
+      </li>
+    </ul>
+  </div>
 </nav>
-
-
 <router-outlet></router-outlet>

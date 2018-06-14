@@ -13,18 +13,18 @@ import { UsuarioServiceConfig} from "./usuario.service";
     UsuarioService
   ]
 })
-export class CoreModule {
-  constructor(@SkipSelf() @Optional() parentModule:CoreModule) {
+export class CoreServiciosModule {
+  constructor(@SkipSelf() @Optional() parentModule:CoreServiciosModule) {
     if (parentModule){
       throw new Error(
-        'El módulo Core ya está cargado, importalo sólo en Modulo App'
+        'El módulo CoreServicios ya está cargado, importalo sólo en Modulo App'
       )
     }
   }
 
   static forRoot(config: UsuarioServiceConfig): ModuleWithProviders {
     return {
-      ngModule: CoreModule,
+      ngModule: CoreServiciosModule,
       providers: [
         {provide: UsuarioServiceConfig, useValue: config }
       ]
