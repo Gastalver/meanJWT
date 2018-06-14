@@ -78,3 +78,6 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+/* picturefill - Para que las imágenes del carousel Bootstrap sean responsive en IE 10 y 11 */
+import 'picturefill/dist/picturefill'

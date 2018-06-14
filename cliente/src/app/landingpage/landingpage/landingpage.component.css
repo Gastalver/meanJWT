@@ -1,29 +1,17 @@
 /*
 Forces carousel image to be 100% width and not max width of 100%
 */
-.imagen-fluida {
-  width:100%!important;
-  height: 100%!important;
+.img-fluid {
+  max-width: 100%;
+  height: auto;
 }
 
-/* Responsive Carousel */
-html,body{height:100%;}
-.carousel,.item,.active{height:100%;}
-.carousel-inner{height:100%;}
-.fill{width:100%;height:100%;background-position:center;background-size:cover;}
-
-/* faster sliding speed */
-.carousel-inner > .item {
-  -webkit-transition: 0.3s ease-in-out left;
-  -moz-transition: 0.3s ease-in-out left;
-  -o-transition: 0.3s ease-in-out left;
-  transition: 0.3s ease-in-out left;
+/*
+Forces carousel image to be 100% width and not max width of 100%
+*/
+.carousel-item .img-fluid {
+  width:100%;
+  height:100%;
 }
 
-/* keep full widget on smaller screens */
-@media (max-width: 767px) {
-  body {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
+
