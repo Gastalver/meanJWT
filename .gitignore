@@ -11,3 +11,4 @@ api/out/
 /api/httpReqApi.http
 /cliente/node_modules/
 /api/httpRequestAPI.http
+!/api/.env
