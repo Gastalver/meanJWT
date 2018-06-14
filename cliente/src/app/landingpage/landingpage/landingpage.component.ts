@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class LandingpageComponent implements OnInit {
   public imagenes: string[];
   constructor() {
-    this.imagenes = ['../../../assets/1400x400.jpg','../../../assets/1400x400.jpg', '../../../assets/1400x400.jpg']
+    this.imagenes = ['../../../assets/1080x675.jpg','../../../assets/1080x675.jpg', '../../../assets/1080x675.jpg']
   }
 
   ngOnInit() {
