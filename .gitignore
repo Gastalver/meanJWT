@@ -3,12 +3,8 @@ api/node_modules/
 api/package-lock.json
 api/logs/
 api/.env
-api/out/
-api/out/
-/api/out/
 /api/documentacion/
 /api/uploads/
 /api/httpReqApi.http
 /cliente/node_modules/
-/api/httpRequestAPI.http
 !/api/.env

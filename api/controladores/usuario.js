@@ -190,10 +190,10 @@ function subirImagenUsuario(req,res){
                 })
             }else {
                 // Es un archivo válido. Obtenemos su extensión.
-                var extension = req.file.originalname.split('.')[1]; //TODO evitar problemas si el nombre tiene más de un punto.
+                extension = req.file.originalname.split('.')[1]; //TODO evitar problemas si el nombre tiene más de un punto.
                 // Añadimos la extensión al nombre de archivo ya subido.
-                var archivoConExtension = req.file.filename + '.' + extension;
-                var rutaConExtension = req.file.path + '.' + extension;
+                archivoConExtension = req.file.filename + '.' + extension;
+                rutaConExtension = req.file.path + '.' + extension;
                 //Renombramos el archivo subido para añadirle la extensión (Multer no lo hace automaticamente)
                 fs.rename(req.file.path,rutaConExtension,(error)=> {
                     if (error) return res.status(500).send({mensaje: 'Error  interno del Servidor'});
