@@ -1,0 +1,42 @@
+<ngb-carousel *ngIf="imagenes">
+  <ng-template ngbSlide>
+    <!--<img [src]="imagenes[0]" alt="Primera diapositiva" class="img-fluid">-->
+    <picture>
+      <source srcset="https://dummyimage.com/2000x580/007aeb/4196e5" media="(min-width: 1400px)">
+      <source srcset="https://dummyimage.com/1400x580/007aeb/4196e5" media="(min-width: 768px)">
+      <source srcset="https://dummyimage.com/800x580/007aeb/4196e5" media="(min-width: 576px)">
+      <img srcset="https://dummyimage.com/600x580/007aeb/4196e5" alt="responsive image" class="d-block img-fluid">
+    </picture>
+    <div class="carousel-caption">
+      <h3>Todo proyecto comienza con un boceto</h3>
+      <p>Y precisamente eso es lo que tenemos ahora mismo, un boceto.</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <!--<img [src]="imagenes[1]" alt="Segunda diapositiva" class="img-fluid">-->
+    <picture>
+      <source srcset="https://dummyimage.com/2000x580/007aeb/4196e5" media="(min-width: 1400px)">
+      <source srcset="https://dummyimage.com/1400x580/007aeb/4196e5" media="(min-width: 768px)">
+      <source srcset="https://dummyimage.com/800x580/007aeb/4196e5" media="(min-width: 576px)">
+      <img srcset="https://dummyimage.com/600x580/007aeb/4196e5" alt="responsive image" class="d-block img-fluid">
+    </picture>
+
+    <div class="carousel-caption">
+      <h3>Decide el tamaño de las diapositivas.</h3>
+      <p>Modifica el tamaño de las fotos dummy a tu gusto en landingPageComponent.html</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <!--<img [src]="imagenes[2]" alt="Tercera diapositiva" class="img-fluid">-->
+    <picture>
+      <source srcset="https://dummyimage.com/2000x580/007aeb/4196e5" media="(min-width: 1400px)">
+      <source srcset="https://dummyimage.com/1400x580/007aeb/4196e5" media="(min-width: 768px)">
+      <source srcset="https://dummyimage.com/800x580/007aeb/4196e5" media="(min-width: 576px)">
+      <img srcset="https://dummyimage.com/600x580/007aeb/4196e5" alt="responsive image" class="d-block img-fluid">
+    </picture>
+    <div class="carousel-caption">
+      <h3>Crea las fotografías reales.</h3>
+      <p>Y guardalas en /src/assets con las dimensiones elegidas.</p>
+    </div>
+  </ng-template>
+</ngb-carousel>

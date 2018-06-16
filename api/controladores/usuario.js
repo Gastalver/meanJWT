@@ -26,6 +26,7 @@ function prueba (req,res){
 
 // Registro de Usuario
 // Handler de la ruta POST /registro.
+// TODO Confirmación de email como último paso del registro.
 function registrarUsuario(req,res){
     let enBody = req.body;
     let usuario = new Usuario();
@@ -225,6 +226,8 @@ function obtenerImagenUsuario(req,res){
     })
 }
 
+//TODO Modificar clave.
+//TODO Recuperar clave.
 
 module.exports = {
     inicio,

@@ -1,0 +1,109 @@
+<!--<div class="container">-->
+
+
+
+
+  <form
+    #formularioRegistro="ngForm"
+    (ngSubmit)="onSubmit(formularioRegistro)"
+    class="form-signin">
+
+    <h4 class="form-signin-heading">{{titulo}}</h4>
+
+    <div class="alert alert-success" *ngIf="status=='Exito'">
+      Registro completado correctamente. <a [routerLink]="['/acceso']">Identifícate aquí</a>
+    </div>
+
+    <div class="alert alert-danger"  *ngIf="status=='Fracaso'">
+      {{mensaje}}
+    </div>
+    <hr>
+
+    <div class="form-group">
+      <!--<label>Nombre</label>-->
+      <input name="nombre"
+             type="text"
+             #nombre="ngModel"
+             [(ngModel)]="usuario.nombre"
+             class="form-control"
+             placeholder="Nombre"
+             autocomplete="given-name"
+             required>
+      <span *ngIf="!nombre.valid && nombre.touched">
+        <small class="form-text text-danger">El nombre es obligatorio.</small>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <!--<label>Apellidos</label>-->
+      <input name="apellidos"
+             type="text"
+             #apellidos="ngModel"
+             [(ngModel)]="usuario.apellidos"
+             class="form-control"
+             placeholder="Apellidos"
+             autocomplete="family-name"
+             required>
+      <span *ngIf="!apellidos.valid && apellidos.touched">
+        <small class="form-text text-danger">Los apellidos son obligatorios.</small>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <!--<label>Apodo</label>-->
+      <input name="apodo"
+             type="text"
+             #apodo="ngModel"
+             [(ngModel)]="usuario.apodo"
+             class="form-control"
+             placeholder="Apodo"
+             autocomplete="nickname"
+             required>
+      <span *ngIf="!apodo.valid && apodo.touched">
+      <small class="form-text text-danger">El apodo es obligatorio.</small>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <!--<label>Correo Electrónico</label>-->
+      <input name="email"
+             type="email"
+             #email="ngModel"
+             [(ngModel)]="usuario.email"
+             class="form-control"
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+             placeholder="Correo electrónico"
+             autocomplete="email"
+             required >
+      <span *ngIf="!email.valid && email.touched">
+      <small class="form-text text-danger">Indique un email válido.</small>
+    </span>
+    </div>
+
+    <div class="form-group">
+      <!--<label for="password" class="sr-only">Clave</label>-->
+      <input name="clave"
+             type="password"
+             #clave="ngModel"
+             [(ngModel)]="usuario.clave"
+             class="form-control"
+             placeholder="Clave"
+             autocomplete="current-password"
+             required>
+      <span *ngIf="!clave.valid && clave.touched">
+      <small class="form-text text-danger">La clave es obligatoria.</small>
+    </span>
+    </div>
+
+
+    <input type="submit" value="{{titulo}}" class="btn btn-block btn-success" [disabled]="!formularioRegistro.form.valid">
+    <br>
+    <!--<small>También se puede registrar con su red social favorita:</small>-->
+    <!--<a class="" href="#"><i class="fa fa-google fa-2x"></i></a>-->
+    <!--<a class="" href="#"><i class="fa fa-facebook-f fa-2x"></i></a>-->
+    <!--<a class="" href="#"><i class="fa fa-twitter fa-2x"></i></a>-->
+    <!--<small class="form-text text-danger"></small>-->
+
+  </form>
+
+<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
