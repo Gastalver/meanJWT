@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute,ParamMap} from "@angular/router";
+import { Router, ActivatedRoute} from "@angular/router";
 
 
 /* Modelos */
@@ -63,9 +63,10 @@ export class RegistroComponent implements OnInit {
 
       },
       (error)=>{
+        let mensajeError = <any>error;
         this.status = 'Fracaso';
         this.mensaje = 'Ha ocurrido un error en el servidor. Inténtelo más tarde.';
-        console.log(error)
+        console.log(mensajeError); // TODO Eliminar en producción.
       }
     )
   }

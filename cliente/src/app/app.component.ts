@@ -1,11 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
+import { Router } from "@angular/router";
+
+/* Modelos */
+import {Usuario} from "./modelos/usuario";
+
+/* Servicios */
+import {UsuarioService} from "./core/usuario.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [UsuarioService]
 })
-export class AppComponent {
-  titulo = 'Mi proyecto';
+export class AppComponent implements OnInit, DoCheck {
+  public titulo:string;
+  public identidad: Usuario;
+  public token:string;
+
+  constructor(
+    private _servicioUsuario:UsuarioService,
+    private _router: Router,
+  ){
+    this.titulo = 'Mi proyecto';
+  }
+
+  ngOnInit(){
+    this.identidad = this._servicioUsuario.getIdentidad();
+    this.token = this._servicioUsuario.getToken();
+  }
+
+  ngDoCheck(){
+    this.identidad = this._servicioUsuario.getIdentidad();
+  }
+
+  cerrarSesion(){
+    this._servicioUsuario.cerrarSesion();
+    this.identidad = null;
+    this.token = null;
+    this._router.navigate(['/'])
+  }
 
 }

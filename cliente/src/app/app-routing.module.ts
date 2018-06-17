@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 /* Componentes */
-import { CarouselComponent} from "./landingpage/carousel/carousel.component";
+//import { CarouselComponent} from "./landingpage/carousel/carousel.component";
 import { NoencontradoComponent} from "./landingpage/noencontrado/noencontrado.component";
 
 /* Routing Module */

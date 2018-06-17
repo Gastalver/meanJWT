@@ -4,12 +4,12 @@ import { NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 /*Componentes*/
 import { CarouselComponent} from "./carousel/carousel.component";
+import { NoencontradoComponent } from './noencontrado/noencontrado.component';
 
 /*Servicios*/
 
 /*Rutas*/
 import { LandingpageRoutingModule } from './landingpage-routing.module';
-import { NoencontradoComponent } from './noencontrado/noencontrado.component';
 
 @NgModule({
   imports: [

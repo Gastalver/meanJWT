@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule} from "./core/core.module";
 import { LandingpageModule} from "./landingpage/landingpage.module";
 import { UsuariosModule} from "./usuarios/usuarios.module";
+import { FeatureModule} from "./feature/feature.module";
 
 /* App components */
 
@@ -30,6 +31,7 @@ import { UsuariosModule} from "./usuarios/usuarios.module";
     NgbModule.forRoot(),
     LandingpageModule,
     UsuariosModule,
+    FeatureModule,
     AppRoutingModule, // AppRouting en último lugar porque contiene la ruta default.
   ],
   providers: [],
