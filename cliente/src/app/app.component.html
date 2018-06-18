@@ -13,20 +13,32 @@
   <div [ngbCollapse]="!isCollapsed" class="collapse navbar-collapse">
     <ul class="navbar-nav" *ngIf="!identidad">
       <li class="nav-item">
-        <a class="nav-link" href="#"> Público1</a>
+        <a class="nav-link" href="#">
+          <fa [name]="'rocket'">
+          </fa>
+              Público1
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"> Público2</a>
+        <a class="nav-link" href="#">
+          <fa [name]="'flash'">
+          </fa>
+          Público2
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="#"> Público3</a>
+        <a class="nav-link " href="#">
+          <fa [name]="'bomb'">
+          </fa>
+          Público3
+        </a>
       </li>
     </ul>
     <ul class="navbar-nav" *ngIf="identidad">
       <li class="nav-item dropdown pointer" ngbDropdown #privado1="ngbDropdown">
         <a class="nav-link dropdown-toggle" ngbDropdownToggle> Privado1</a>
         <div class="dropdown-menu" ngbDropdownMenu>
-          <a class="dropdown-item" href="#">Apartado A</a>
+          <a class="dropdown-item" [routerLink]="['/privado1']" routerLinkActive="active">Apartado A</a>
           <a class="dropdown-item" href="#">Apartado B</a>
           <a class="dropdown-item" href="#">Apartado C</a>
         </div>
@@ -39,8 +51,16 @@
       </li>
     </ul>
     <div class="navbar-nav ml-auto" *ngIf="!identidad">
-      <a class="btn btn-success mb-2 mb-md-0  mr-md-2" [routerLink]="['/acceso']" routerLinkActive="active">Acceso</a>
-      <a class="btn btn-success" [routerLink]="['/registro']" routerLinkActive="active">Registro</a>
+      <a class="btn btn-success mb-2 mb-md-0  mr-md-2" [routerLink]="['/acceso']" routerLinkActive="active">
+        <fa [name]="'sign-in'">
+        </fa>
+        Acceso
+      </a>
+      <a class="btn btn-success" [routerLink]="['/registro']" routerLinkActive="active">
+        <fa [name]="'user-plus'">
+        </fa>
+        Registro
+      </a>
     </div>
 
     <ul class="navbar-nav ml-auto" *ngIf="identidad">
@@ -53,7 +73,8 @@
         <div class="dropdown-menu" ngbDropdownMenu>
           <a class="dropdown-item" href="#">Mi Perfil</a>
           <a class="dropdown-item" href="#">Mis datos</a>
-          <a class="dropdown-item" (click)="cerrarSesion()">Cerrar Sesión</a>
+          <a class="dropdown-item" (click)="cerrarSesion()"><fa [name]="'sign-out'">
+          </fa> Cerrar Sesión</a>
         </div>
       </li>
 

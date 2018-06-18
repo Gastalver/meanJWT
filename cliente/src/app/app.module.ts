@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule} from "@angular/forms";
 import { HttpClientModule} from "@angular/common/http";
 import { NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { Angular2FontawesomeModule} from "angular2-fontawesome";
 
 /* App root */
 import { AppComponent } from './app.component';
@@ -29,6 +30,7 @@ import { FeatureModule} from "./feature/feature.module";
     HttpClientModule,
     CoreModule.forRoot({apiUrl: 'http://localhost:3800/api/'}),
     NgbModule.forRoot(),
+    Angular2FontawesomeModule,
     LandingpageModule,
     UsuariosModule,
     FeatureModule,

@@ -88,11 +88,48 @@ Otra alternativa interesante para documentar la API es el módulo `swagger-jsdoc
  * [**`bootstrap`**](https://www.npmjs.com/package/bootstrap) Como framework CSS. Sólo utilizamos los estilos, que se importan desde `angular.json`.
  * [**`@ng-bootstrap`**](https://www.npmjs.com/package/@ng-bootstrap/ng-bootstrap) Directivas Angular que sustituyen a los componentes Bootstrap y hacen innecesario bootstrap.js. 
  * [**`picturefill`**](https://www.npmjs.com/package/picturefill) Polifill para poder usar el elemento `<picture>` de HTML5 en IE10 y 11. Lo usamos en el Carousel del componente landing page. Se importa luego desde `polyfills.ts`. 
+ * [**`fontawesome@4.7.0`**](https://www.npmjs.com/package/font-awesome) Iconos.
+ * [**`angular2-fontawesome`**](https://www.npmjs.com/package/angular2-fontawesome) Directivas para usar iconos font-awesome en Angular.
  * [**``**]() Para .
-
-### Comentarios
-#### Carousel. 
+ * [**``**]() Para .
+ * [**``**]() Para .
+### Consideraciones generales.
+#### Angular
+El frontEnd está desarrollado en TypeScript con el framework Angular.
+#### ngBootstrap
+Como framework CSS se usa ngBootstrap, conjunto de directivas que utiliza los estilos css de Angular4 y recrea todos sus componentes pero sin necesidad de usar ni `JQuery` ni `Bootstrap.js`.
+La hoja de estilos de Bootstrap se instala como módulo npm y se importa en `angular.json`. También podría haberse importado en `styles.css`.  
+#### Font-Awesome 4.7.0
+Se propone el uso de font awesome 4.7.0 porque es la última versión gratuita que realmente incluye un conjunto de iconos amplio, y ello a pesar de que son fuentes y no vectores como en la versión 5.
+Idealmente se deberían usar iconos vectoriales ya que son más eficientes y rápidos.
+####Uso de LocalStorage.
+Para hacer persistentes los datos del usuario autenticado así como el token de autenticación exigido por la API en la mayoría de las rutas se almacenan en LocaStorage con las claves "identidad" y "token". Se eliminan cuando se cierra la sesión, mediante un método del servicio usuarios incluido en el módulo core. 
+### Estructura de Módulos y Componentes Angular
+Se incluye lo siguiente.
+####AppModule y appComponent
+El módulo raiz AppModule importa las rutas de los demás módulos, salvo las de los lazyLocal Modules.
+##### AppComponent
+Consiste en una navbar que persiste a lo largo de toda la aplicación. Es una estructura muy sencilla.
+####Módulo Core
+Es un módulo donde se deben incluir los servicios utilizados por toda la app. 
+##### Servicio Usuarios
+Únicamente se incluye un servicio llamado UsuariosService que es el responsable de conectar con la API para gestionar la autenticación, autorización y gestión de usuarios.
+####Módulo Landing Page
+Es un módulo de prestaciones (feature module) donde se deberían incluir todos los componentes de la página pública de llegada a la app, es decir, de la landingpage.
+Incluye dos componentes, carousel y noencontrado. 
+##### Componente Carousel. 
 El carousel en landing page resuelve un problema muy común en Bootstrap, que las imagenes sean responsive. Además se optimiza para que cargue una imagen de un tamaño adecuado al tamaño de pantalla del agente.
 Implementamos esta solución comentada en [BootstrapCreative](Luego crea las fotografías.). 
 Es prescindible, desde luego. Se podría también eliminar el módulo picturefill. Esta es solo una propuesta de landing page.
- 
+##### Componente NoEncontrado
+Es un componente cuya vista se muestra en toda la app cuando la ruta del navegador no existe.
+#### Módulo Usuarios
+Incluye las rutas y toda la lógica y las vistas para la creación, autenticación, y gestión de usuarios de la app.
+##### Componente registro
+Para crear un nuevo usuario de la app.
+##### Componente acceso
+Para autentificar un usuario en la app.
+#### Módulo Feature
+Se incluye este módulo como guía para desarrollar la estructura. Debe incluir las rutas y la lógica de una prestación o ámbito concreto de la app.
+
+

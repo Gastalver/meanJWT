@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {FeatureComponent} from "./feature/feature.component";
 
 const rutasFeature: Routes = [
-  {path: 'Privado1', component: FeatureComponent },];
+  {path: 'privado1', component: FeatureComponent },];
 
 @NgModule({
   imports: [RouterModule.forChild(rutasFeature)],
