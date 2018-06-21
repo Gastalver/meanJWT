@@ -1,5 +1,6 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { Router } from "@angular/router";
+import { environment} from "../environments/environment";
 
 /* Modelos */
 import {Usuario} from "./modelos/usuario";
@@ -17,12 +18,14 @@ export class AppComponent implements OnInit, DoCheck {
   public titulo:string;
   public identidad: Usuario;
   public token:string;
+  public apiUrl:string;
 
   constructor(
     private _servicioUsuario:UsuarioService,
     private _router: Router,
   ){
     this.titulo = 'Mi proyecto';
+    this.apiUrl = environment.apiUrl;
   }
 
   ngOnInit(){

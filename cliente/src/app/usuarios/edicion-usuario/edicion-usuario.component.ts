@@ -61,8 +61,14 @@ export class EdicionUsuarioComponent implements OnInit {
                 localStorage.setItem('identidad',JSON.stringify(this.usuario));
               },
               (error)=>{
+                let respuesta = JSON.parse(error);
                 this.status = 'Fracaso';
-                this.mensaje = 'Ha habido un problema con el archivo de imagen. Inténtelo de nuevo.'
+                if (respuesta.mensaje){
+                this.mensaje = respuesta.mensaje;
+                } else {
+                  this.mensaje = 'Ha habido un problema con el archivo de imagen. Inténtelo de nuevo.'
+                }
+                this.archivosParaEnviar=[];
               }
             )
         }
