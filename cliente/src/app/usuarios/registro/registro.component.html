@@ -14,9 +14,9 @@
       Registro completado correctamente. <a [routerLink]="['/acceso']">Identifícate aquí</a>
     </div>
 
-    <div class="alert alert-danger"  *ngIf="status=='Fracaso'">
-      {{mensaje}}
-    </div>
+    <ngb-alert type="danger" *ngIf="!staticAlertClosed && status=='Fracaso'" (close)="staticAlertClosed=true">{{mensaje}}</ngb-alert>
+
+
     <hr>
 
     <div class="form-group">

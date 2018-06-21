@@ -218,7 +218,7 @@ function obtenerImagenUsuario(req,res){
     var rutaImagenUsuario = config.multer.dirImagenesUsuarios + '/'+ archivo;
     fs.exists(rutaImagenUsuario,(existe)=>{
         if(existe){
-            winston.log('info','Descargada imagen de usuario de ' + req.usuario.nombre + ' ' + req.usuario.apellidos);
+            winston.log('info','Descargado archivo de imagen ' + req.params.archivo);
             res.sendFile(path.resolve(rutaImagenUsuario));
         } else {
             res.status(404).send({mensaje:'No existe el archivo solicitado.'});

@@ -196,7 +196,7 @@ api.post('/usuario/:id/imagen',[md_aut.compruebaAutenticacion, upload.single('im
  * @response {string} response.usuario.rol El rol del usuario actualizado.
  * @response {string} response.usuario.image El archivo de imagen del usuario actualizado.
  */
-api.get('/usuario/imagen/:archivo',md_aut.compruebaAutenticacion,controladorUsuario.obtenerImagenUsuario);
+api.get('/usuario/imagen/:archivo',controladorUsuario.obtenerImagenUsuario);
 
 
 module.exports = api;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
+import { environment } from "../../../environments/environment";
 
 /* Modelos */
 import {Usuario} from "../../modelos/usuario"; [ Usuario];
@@ -22,6 +23,7 @@ export class EdicionUsuarioComponent implements OnInit {
   public status: string;
   public mensaje: string;
   public archivosParaEnviar: Array<File>;
+  public apiUrl: string;
 
 
   constructor(
@@ -36,6 +38,8 @@ export class EdicionUsuarioComponent implements OnInit {
     this.token = this._servicioUsuario.getToken();
     this.status = null;
     this.mensaje = null;
+    this.apiUrl = environment.apiUrl;
+    this.archivosParaEnviar = [];
 
   }
 
@@ -49,11 +53,18 @@ export class EdicionUsuarioComponent implements OnInit {
           this.status = 'Fracaso';
           this.mensaje = 'Ha ocurrido un error en el Servidor. Inténtelo más tarde.'
         }else{
-          this.status = 'Exito';
-          // Actualizamos datos identidad en localStorage
-          localStorage.setItem('identidad', JSON.stringify(this.usuario));
-          this.identidad = this.usuario;
-          // Subida de imagen de archivo.
+          this._servicioSubidaArchivos.RequestConArchivos(this.apiUrl + 'usuario/' + this.usuario._id + '/imagen',[],this.archivosParaEnviar,this.token,'imagenUsuario')
+            .then(
+              (resultado: any)=>{
+                this.status = 'Exito';
+                this.usuario.imagen = resultado.usuario.imagen;
+                localStorage.setItem('identidad',JSON.stringify(this.usuario));
+              },
+              (error)=>{
+                this.status = 'Fracaso';
+                this.mensaje = 'Ha habido un problema con el archivo de imagen. Inténtelo de nuevo.'
+              }
+            )
         }
       },
       (error)=>{
@@ -74,7 +85,5 @@ export class EdicionUsuarioComponent implements OnInit {
 
   eventoCambioEnArchivosSeleccionados(archivosSeleccionados: any){
     this.archivosParaEnviar = <Array<File>>archivosSeleccionados.target.files;
-    console.log(this.archivosParaEnviar);
-    this._servicioSubidaArchivos.RequestConArchivos('usuario/' + this.usuario._id + '/imagen',[],this.archivosParaEnviar,this.token,'imagen')
   }
 }

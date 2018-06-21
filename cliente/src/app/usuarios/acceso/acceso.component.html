@@ -5,9 +5,8 @@
 
   <h4 class="form-signin-heading">{{titulo}}</h4>
 
-  <div class="alert alert-danger"  *ngIf="status=='Fracaso'">
-    {{mensaje}}
-  </div>
+  <ngb-alert type="danger" *ngIf="!staticAlertClosed && status=='Fracaso'" (close)="staticAlertClosed=true">{{mensaje}}</ngb-alert>
+
   <hr>
 
   <div class="form-group">
