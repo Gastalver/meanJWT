@@ -138,7 +138,7 @@ api.post('/acceso',controladorUsuario.autenticarUsuario);
  * @response {string} response.usuario.rol El rol del usuario actualizado.
  * @response {string} response.usuario.image El archivo de imagen del usuario actualizado.
  */
-api.put('/usuarios/:id',md_aut.compruebaAutenticacion,controladorUsuario.actualizarUsuario);
+api.put('/usuario/:id',md_aut.compruebaAutenticacion,controladorUsuario.actualizarUsuario);
 
 
 
@@ -167,7 +167,7 @@ api.put('/usuarios/:id',md_aut.compruebaAutenticacion,controladorUsuario.actuali
  * @response {string} response.usuario.rol El rol del usuario actualizado.
  * @response {string} response.usuario.image El archivo de imagen del usuario actualizado.
  */
-api.post('/usuarios/:id/imagen',[md_aut.compruebaAutenticacion, upload.single('imagenUsuario')],controladorUsuario.subirImagenUsuario);
+api.post('/usuario/:id/imagen',[md_aut.compruebaAutenticacion, upload.single('imagenUsuario')],controladorUsuario.subirImagenUsuario);
 
 
 
@@ -196,7 +196,7 @@ api.post('/usuarios/:id/imagen',[md_aut.compruebaAutenticacion, upload.single('i
  * @response {string} response.usuario.rol El rol del usuario actualizado.
  * @response {string} response.usuario.image El archivo de imagen del usuario actualizado.
  */
-api.get('/usuarios/imagen/:archivo',md_aut.compruebaAutenticacion,controladorUsuario.obtenerImagenUsuario);
+api.get('/usuario/imagen/:archivo',md_aut.compruebaAutenticacion,controladorUsuario.obtenerImagenUsuario);
 
 
 module.exports = api;

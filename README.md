@@ -102,8 +102,11 @@ La hoja de estilos de Bootstrap se instala como módulo npm y se importa en `ang
 #### Font-Awesome 4.7.0
 Se propone el uso de font awesome 4.7.0 porque es la última versión gratuita que realmente incluye un conjunto de iconos amplio, y ello a pesar de que son fuentes y no vectores como en la versión 5.
 Idealmente se deberían usar iconos vectoriales ya que son más eficientes y rápidos.
-####Uso de LocalStorage.
+#### Uso de LocalStorage.
 Para hacer persistentes los datos del usuario autenticado así como el token de autenticación exigido por la API en la mayoría de las rutas se almacenan en LocaStorage con las claves "identidad" y "token". Se eliminan cuando se cierra la sesión, mediante un método del servicio usuarios incluido en el módulo core. 
+#### App configuración
+Las variables globales para toda la aplicación se guardan en `environment.js` y `environment.prod.js`. Cuando la variable envirnment es production, se usan los valores del segundo archivo.
+En estos archivos guardamos por ejemplo la raiz de la url de la API.
 ### Estructura de Módulos y Componentes Angular
 Se incluye lo siguiente.
 ####AppModule y appComponent

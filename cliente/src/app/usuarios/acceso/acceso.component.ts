@@ -32,7 +32,7 @@ export class AccesoComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Componente usuarios/acceso cargado.');
+    // console.log('Componente usuarios/acceso cargado.');
   }
 
   onSubmit(formularioAcceso){
@@ -41,7 +41,6 @@ export class AccesoComponent implements OnInit {
     //Primero pedirmos los datos del usuario, sin token. (Cfr. ruta en API)
     this._servicioUsuario.acceso(this.usuario).subscribe(
       (response)=>{
-        console.log(response.usuario);
         this.identidad = response.usuario;
         // Comprobamos que han llegado los datos. ¡¡Son importantes!!
         if (!this.identidad || !this.identidad._id){
@@ -52,7 +51,6 @@ export class AccesoComponent implements OnInit {
           // Usamos localStorage para que estén disponibles localmente..
           // TODO Comprobar que localStorage está disponible en el agente.
           localStorage.setItem('identidad', JSON.stringify(this.identidad));
-          console.log('Guardado en localStorage el usuario: ' + localStorage.getItem('identidad'));
         //  Segundo pedimos el token, que también conservamos (ver pedirToken)
           this.pedirToken();
           this._router.navigate(['privado1']);
@@ -85,7 +83,6 @@ export class AccesoComponent implements OnInit {
         } else {
           //  Conservamos de modo persistente el token.
           localStorage.setItem('token', this.token);
-          console.log('Guardado en localStorage el token: ' + localStorage.getItem('token'));
         }
 
       },

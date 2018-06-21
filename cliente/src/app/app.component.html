@@ -68,11 +68,12 @@
         <!--Cargar imagen de usuario o imagen por defecto-->
       </li>
 
-      <li class="nav-item dropdown pointer" ngbDropdown #menuUsuario="ngbDropdown">
+      <li class="nav-item dropdown pointer" ngbDropdown #menuUsuario="ngbDropdown" placement="bottom-right">
         <a class="nav-link dropdown-toggle" ngbDropdownToggle> {{identidad.nombre + ' ' + identidad.apellidos}}</a>
         <div class="dropdown-menu" ngbDropdownMenu>
-          <a class="dropdown-item" href="#">Mi Perfil</a>
-          <a class="dropdown-item" href="#">Mis datos</a>
+          <a class="dropdown-item" [routerLink]="['/usuario']" routerLinkActive="active">
+            <fa [name] = "'cog'"></fa>
+            Mi Perfil</a>
           <a class="dropdown-item" (click)="cerrarSesion()"><fa [name]="'sign-out'">
           </fa> Cerrar Sesión</a>
         </div>

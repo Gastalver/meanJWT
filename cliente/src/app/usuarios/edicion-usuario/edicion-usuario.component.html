@@ -1,0 +1,91 @@
+<form
+  #formularioEdicionUsuario="ngForm"
+  (ngSubmit)="onSubmit(formularioEdicionUsuario)"
+  class="form-signin">
+
+  <h4 class="form-signin-heading">{{titulo}}</h4>
+
+   <ngb-alert type="success" *ngIf="!staticAlertClosed && status=='Exito'" (close)="staticAlertClosed=true">Perfil de usuario actualizado con éxito.</ngb-alert>
+   <ngb-alert type="danger" *ngIf="!staticAlertClosed && status=='Fracaso'" (close)="staticAlertClosed=true">{{mensaje}}</ngb-alert>
+
+
+  <hr>
+
+  <div class="form-group">
+    <!--<label>Nombre</label>-->
+    <input name="nombre"
+           type="text"
+           #nombre="ngModel"
+           [(ngModel)]="usuario.nombre"
+           class="form-control"
+           placeholder="Nombre"
+           autocomplete="given-name"
+           required>
+    <span *ngIf="!nombre.valid && nombre.touched">
+        <small class="form-text text-danger">El nombre es obligatorio.</small>
+      </span>
+  </div>
+
+  <div class="form-group">
+    <!--<label>Apellidos</label>-->
+    <input name="apellidos"
+           type="text"
+           #apellidos="ngModel"
+           [(ngModel)]="usuario.apellidos"
+           class="form-control"
+           placeholder="Apellidos"
+           autocomplete="family-name"
+           required>
+    <span *ngIf="!apellidos.valid && apellidos.touched">
+        <small class="form-text text-danger">Los apellidos son obligatorios.</small>
+      </span>
+  </div>
+
+  <div class="form-group">
+    <!--<label>Apodo</label>-->
+    <input name="apodo"
+           type="text"
+           #apodo="ngModel"
+           [(ngModel)]="usuario.apodo"
+           class="form-control"
+           placeholder="Apodo"
+           autocomplete="nickname"
+           required>
+    <span *ngIf="!apodo.valid && apodo.touched">
+      <small class="form-text text-danger">El apodo es obligatorio.</small>
+      </span>
+  </div>
+
+  <div class="form-group">
+    <!--<label>Correo Electrónico</label>-->
+    <input name="email"
+           type="email"
+           #email="ngModel"
+           [(ngModel)]="usuario.email"
+           class="form-control"
+           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+           placeholder="Correo electrónico"
+           autocomplete="email"
+           required >
+    <span *ngIf="!email.valid && email.touched">
+      <small class="form-text text-danger">Indique un email válido.</small>
+    </span>
+  </div>
+
+  <div class="form-group">
+    <label>Sube tu avatar</label>
+    <input name="imagen"
+           type="file"
+           placeholder="Subir imagen"
+           (change)="eventoCambioEnArchivosSeleccionados($event)">
+  </div>
+
+  <input type="submit" value="{{titulo}}" class="btn btn-block btn-success" [disabled]="!formularioEdicionUsuario.form.valid">
+  <br>
+  <!--<small>También se puede registrar con su red social favorita:</small>-->
+  <!--<a class="" href="#"><i class="fa fa-google fa-2x"></i></a>-->
+  <!--<a class="" href="#"><i class="fa fa-facebook-f fa-2x"></i></a>-->
+  <!--<a class="" href="#"><i class="fa fa-twitter fa-2x"></i></a>-->
+  <!--<small class="form-text text-danger"></small>-->
+
+</form>

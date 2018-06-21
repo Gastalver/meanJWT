@@ -1,8 +1,9 @@
 //Singleton Service
 
-import { Injectable, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/index";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 /*Modelo*/
 import { Usuario} from "../modelos/usuario";
@@ -12,21 +13,15 @@ import { Usuario} from "../modelos/usuario";
   providedIn: 'root'
 })
 
-export class UsuarioServiceConfig {
-  apiUrl = '';
-}
 export class UsuarioService {
   public apiUrl;
   public identidad;
   public token;
 
   constructor(
-    @Optional() private config: UsuarioServiceConfig,
     public _http: HttpClient
   ) {
-    if(config){
-      this.apiUrl = config.apiUrl;
-    }
+    this.apiUrl = environment.apiUrl;
   }
 
   /**
@@ -74,7 +69,7 @@ export class UsuarioService {
    * Recuperar token de usuario desde localStorage.
    */
   getToken(){
-    let token= localStorage.getItem('identidad');
+    let token= localStorage.getItem('token');
     if(token!=undefined){
       this.token = token;
     } else {
@@ -83,10 +78,26 @@ export class UsuarioService {
     return this.token;
   }
 
+  /**
+   * Cerrar sesion. Eliminar datos de localStorage
+   */
   cerrarSesion(){
     localStorage.removeItem('token');
     localStorage.removeItem('identidad');
   }
+
+  /**
+   * Actualizar datos de usuario.
+   * @param {Usuario} usuario
+   * @returns {Observable<any>}
+   */
+  actualizarUsuario(usuario:Usuario):Observable<any>{
+  let enBody = JSON.stringify(usuario);
+  let cabeceras = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization',this.getToken());
+  return this._http.put(this.apiUrl + 'usuario/' + usuario._id, enBody, {headers: cabeceras})
+}
 
 
 }

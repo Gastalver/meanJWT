@@ -12,7 +12,7 @@ export class CarouselComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Módulo landingpage/carousel/carousel cargado.')
+    // console.log('Componente landingpage/carousel cargado.')
   }
 
 }

@@ -6,6 +6,7 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { RegistroComponent } from './registro/registro.component';
 import { AccesoComponent } from './acceso/acceso.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { EdicionUsuarioComponent } from './edicion-usuario/edicion-usuario.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
   ],
   declarations: [
     RegistroComponent,
-    AccesoComponent
+    AccesoComponent,
+    EdicionUsuarioComponent
   ]
 })
 export class UsuariosModule { }

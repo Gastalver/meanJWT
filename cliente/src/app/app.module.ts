@@ -28,7 +28,7 @@ import { FeatureModule} from "./feature/feature.module";
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    CoreModule.forRoot({apiUrl: 'http://localhost:3800/api/'}),
+    CoreModule,
     NgbModule.forRoot(),
     Angular2FontawesomeModule,
     LandingpageModule,

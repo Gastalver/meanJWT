@@ -1,21 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute} from "@angular/router";
 
-
 /* Modelos */
 import { Usuario} from "../../modelos/usuario";
 
 /* Servicios */
 import { UsuarioService} from "../../core/usuario.service";
 
-
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css'],
-  providers: [
-    UsuarioService
-  ]
+  providers: [ UsuarioService ]
 })
 export class RegistroComponent implements OnInit {
 
