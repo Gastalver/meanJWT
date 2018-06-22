@@ -9,6 +9,7 @@ import { NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { Angular2FontawesomeModule} from "angular2-fontawesome";
 import { EdicionUsuarioComponent } from './edicion-usuario/edicion-usuario.component';
 
+
 @NgModule({
   imports: [
     CommonModule,

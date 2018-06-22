@@ -1,6 +1,7 @@
 import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsuarioService} from "./usuario.service";
+import { UsuarioGuard} from "./usuario.guard";
 
 @NgModule({
   imports: [
@@ -9,7 +10,8 @@ import { UsuarioService} from "./usuario.service";
   declarations: [],
   exports: [],
   providers: [
-    UsuarioService
+    UsuarioService,
+    UsuarioGuard
   ]
 })
 export class CoreModule {

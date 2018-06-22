@@ -7,6 +7,8 @@ import { Angular2FontawesomeModule} from "angular2-fontawesome";
 import { FeatureComponent } from './feature/feature.component';
 
 /* Servicios */
+import { UsuarioService} from "../core/usuario.service";
+import { UsuarioGuard} from "../core/usuario.guard";
 
 /* Rutas */
 import { FeatureRoutingModule } from './feature-routing.module';
@@ -21,6 +23,10 @@ import { FeatureRoutingModule } from './feature-routing.module';
   ],
   declarations: [
     FeatureComponent,
+  ],
+  providers: [
+    UsuarioService,
+    UsuarioGuard
   ]
 })
 export class FeatureModule { }
