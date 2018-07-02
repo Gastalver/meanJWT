@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { Title} from "@angular/platform-browser";
 
 /* Modelos */
 import { Usuario} from "../../modelos/usuario";
@@ -25,8 +26,10 @@ export class AccesoComponent implements OnInit {
   constructor(
     private _servicioUsuario: UsuarioService,
     private _router: Router,
+    private _titulo: Title
 
   ) {
+    this._titulo.setTitle('Acceso');
     this.titulo = "Acceso";
     this.usuario = new Usuario("","","","","","","","",null);
   }

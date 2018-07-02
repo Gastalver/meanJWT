@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule} from "@angular/forms";
 import { HttpClientModule} from "@angular/common/http";
@@ -36,7 +36,9 @@ import { FeatureModule} from "./feature/feature.module";
     FeatureModule,
     AppRoutingModule, // AppRouting en último lugar porque contiene la ruta default.
   ],
-  providers: [],
+  providers: [
+    Title
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

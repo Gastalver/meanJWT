@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute} from "@angular/router";
+import { Title } from "@angular/platform-browser";
 
 /* Modelos */
 import { Usuario} from "../../modelos/usuario";
@@ -23,8 +24,10 @@ export class RegistroComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _servicioUsuario: UsuarioService
+    private _servicioUsuario: UsuarioService,
+    private _titulo: Title
   ) {
+    this._titulo.setTitle('Registro');
     this.titulo = 'Registro';
     this.usuario = new Usuario(
       "",

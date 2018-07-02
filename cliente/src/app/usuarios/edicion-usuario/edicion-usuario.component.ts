@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { environment } from "../../../environments/environment";
+import { Title} from "@angular/platform-browser";
 
 /* Modelos */
 import {Usuario} from "../../modelos/usuario"; [ Usuario];
@@ -30,8 +31,10 @@ export class EdicionUsuarioComponent implements OnInit {
     private _router: Router,
     private _servicioUsuario: UsuarioService,
     private _ruta: ActivatedRoute,
-    private _servicioSubidaArchivos: UploadService
+    private _servicioSubidaArchivos: UploadService,
+    private _titulo: Title
   ) {
+    this._titulo.setTitle('Mi Perfil')
     this.titulo = 'Actualizar mis datos';
     this.usuario = this._servicioUsuario.getIdentidad();
     this.identidad = this.usuario;

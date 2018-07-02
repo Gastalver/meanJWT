@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-noencontrado',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoencontradoComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _titulo: Title
+  ) {
+    this._titulo.setTitle('404 Oops')
+  }
 
   ngOnInit() {
   }
