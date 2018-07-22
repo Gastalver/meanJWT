@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 });
 
 // rutas
-app.use('/api',rutasUsuario);
+app.use('/api/v1',rutasUsuario);
 
 
 // exportar
