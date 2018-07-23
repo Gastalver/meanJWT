@@ -103,6 +103,6 @@ export class EdicionUsuarioComponent implements OnInit {
   eliminaImagenUsuario(){
     this.usuario.imagen = null;
     this.archivosParaEnviar = [];
-    console.log(this.usuario)
+    // console.log(this.usuario)
   }
 }
