@@ -76,6 +76,9 @@
     <img src="{{apiUrl + '/usuarios/imagen/' + usuario.imagen}}"
          class="card-img-top"
          *ngIf="usuario.imagen">
+    <img src="../../../assets/usuariosImagen.jpg"
+         class="card-img-top"
+         *ngIf="!usuario.imagen">
     <div class="card-body">
       <label for="inputfile" class="btn-sm btn-block btn-primary text-center">
         <fa [name] = "'file-image-o'"></fa> {{ archivosParaEnviar.length > 0 ? archivosParaEnviar[0].name : 'Subir Avatar'}}</label>

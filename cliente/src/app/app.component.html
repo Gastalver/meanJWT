@@ -67,10 +67,14 @@
       <li class="avatar">
         <!--Cargar imagen de usuario o imagen por defecto-->
         <img
+          *ngIf="identidad.imagen"
           [src]="apiUrl + '/usuarios/imagen/' + identidad.imagen"
         class="img-fluid rounded-circle mt-1" style="width: 30px; height: 30px">
+        <img
+          *ngIf="!identidad.imagen"
+          src="../assets/usuariosImagen.jpg"
+          class="img-fluid rounded-circle mt-1" style="width: 30px; height: 30px">
       </li>
-
       <li class="nav-item dropdown pointer" ngbDropdown #menuUsuario="ngbDropdown" placement="bottom-right">
         <a class="nav-link dropdown-toggle" ngbDropdownToggle> {{identidad.nombre + ' ' + identidad.apellidos}}</a>
         <div class="dropdown-menu" ngbDropdownMenu>
@@ -81,7 +85,6 @@
           </fa> Cerrar Sesión</a>
         </div>
       </li>
-
     </ul>
 
 
