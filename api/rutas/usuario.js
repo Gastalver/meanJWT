@@ -1,7 +1,7 @@
 'use strict'
 
 /**
- * Rutas en el directorio raiz de la api /api relativas a usuarios.
+ * Rutas en el directorio raiz de la api (/api/v1) relativas a usuarios.
  * @module Usuarios
  */
 
@@ -25,7 +25,7 @@ var api = express.Router();
  * Simplemente dice Hola.
  *
  * @name inicio
- * @path {GET} /
+ * @path {GET} /usuarios/inicio
  * @response {Object} response {}
  * @response {string} response.mensaje Mensaje informativo
  * @auth No requiere autenticación
@@ -37,7 +37,7 @@ api.get('/inicio',controladorUsuario.inicio);
  * Simplemente dice Prueba
  *
  * @name prueba
- * @path {GET} /
+ * @path {GET} /usuarios/prueba
  * @response {String} mensaje
  * @auth No requiere autenticación
  */
@@ -48,7 +48,7 @@ api.get('/prueba',md_aut.compruebaAutenticacion, controladorUsuario.prueba);
  * Registra un usuario nuevo.
  *
  * @name registroNuevoUsuario
- * @path {POST} /registro
+ * @path {POST} /
  * @auth No requiere autenticación
  * @body {string} nombre El nombre del nuevo usuario.
  * @body {string} apellidos Los apellidos del nuevo usuario.
@@ -74,7 +74,7 @@ api.get('/prueba',md_aut.compruebaAutenticacion, controladorUsuario.prueba);
  * @response {string} response.usuario.rol El nombre del usuario creado.
  * @response {string} response.usuario.image El archivo de imagen del usuario creado.
  */
-api.post('/registro',controladorUsuario.registrarUsuario);
+api.post('/',controladorUsuario.registrarUsuario);
 
 
 
@@ -83,7 +83,7 @@ api.post('/registro',controladorUsuario.registrarUsuario);
  * si se añade la propiedad enviarToken, se recibe el token JWT de ese usuario, necesario para autenticarse y acceder.
  *
  * @name autenticaciónUsuario
- * @path {POST} /acceso
+ * @path {POST} /usuarios/acceso
  * @auth Requiere email y clave
  * @body {string} email Email del usuario registrado.
  * @body {string} clave Clave del usuario registrado.
@@ -112,7 +112,7 @@ api.post('/acceso',controladorUsuario.autenticarUsuario);
  * Actualización de los datos de un usuario.
  *
  * @name actualizacionUsuario
- * @path {PUT} /usuario/:id
+ * @path {PUT} /usuarios/:id
  * @auth Requiere token
  * @header {String} Authorization El token del usuario.
  * @params {String} :id Id del usuario a actualizar.
@@ -138,7 +138,7 @@ api.post('/acceso',controladorUsuario.autenticarUsuario);
  * @response {string} response.usuario.rol El rol del usuario actualizado.
  * @response {string} response.usuario.image El archivo de imagen del usuario actualizado.
  */
-api.put('/usuario/:id',md_aut.compruebaAutenticacion,controladorUsuario.actualizarUsuario);
+api.put('/:id',md_aut.compruebaAutenticacion,controladorUsuario.actualizarUsuario);
 
 
 
@@ -146,7 +146,7 @@ api.put('/usuario/:id',md_aut.compruebaAutenticacion,controladorUsuario.actualiz
  * Guardar la imagen de un usuario.
  *
  * @name guardarImagenUsuario
- * @path {POST} /usuario/:id/imagen
+ * @path {POST} /usuarios/:id/imagen
  * @auth Requiere token
  * @header {String} Authorization El token del usuario.
  * @params {String} :id Id del usuario cuya foto se pretende guardar.
@@ -167,7 +167,7 @@ api.put('/usuario/:id',md_aut.compruebaAutenticacion,controladorUsuario.actualiz
  * @response {string} response.usuario.rol El rol del usuario actualizado.
  * @response {string} response.usuario.image El archivo de imagen del usuario actualizado.
  */
-api.post('/usuario/:id/imagen',[md_aut.compruebaAutenticacion, upload.single('imagenUsuario')],controladorUsuario.subirImagenUsuario);
+api.post('/:id/imagen',[md_aut.compruebaAutenticacion, upload.single('imagenUsuario')],controladorUsuario.subirImagenUsuario);
 
 
 
@@ -176,7 +176,7 @@ api.post('/usuario/:id/imagen',[md_aut.compruebaAutenticacion, upload.single('im
  * Obtener el archivo de imagen de un usuario.
  *
  * @name obtenerImagenUsuario
- * @path {GET} /usuario/imagen/:archivo
+ * @path {GET} /usuarios/imagen/:archivo
  * @auth Requiere token
  * @header {String} Authorization El token del usuario.
  * @params {String} archivo El nombre de archivo de la foto que se pretende obtener.
@@ -196,7 +196,7 @@ api.post('/usuario/:id/imagen',[md_aut.compruebaAutenticacion, upload.single('im
  * @response {string} response.usuario.rol El rol del usuario actualizado.
  * @response {string} response.usuario.image El archivo de imagen del usuario actualizado.
  */
-api.get('/usuario/imagen/:archivo',controladorUsuario.obtenerImagenUsuario);
+api.get('/imagen/:archivo',controladorUsuario.obtenerImagenUsuario);
 
 
 module.exports = api;

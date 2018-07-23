@@ -56,7 +56,7 @@ export class EdicionUsuarioComponent implements OnInit {
           this.status = 'Fracaso';
           this.mensaje = 'Ha ocurrido un error en el Servidor. Inténtelo más tarde.'
         }else{
-          this._servicioSubidaArchivos.RequestConArchivos(this.apiUrl + 'usuario/' + this.usuario._id + '/imagen',[],this.archivosParaEnviar,this.token,'imagenUsuario')
+          this._servicioSubidaArchivos.RequestConArchivos(this.apiUrl + '/usuarios/' + this.usuario._id + '/imagen',[],this.archivosParaEnviar,this.token,'imagenUsuario')
             .then(
               (resultado: any)=>{
                 this.status = 'Exito';

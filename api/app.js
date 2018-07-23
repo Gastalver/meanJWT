@@ -38,8 +38,10 @@ app.use((req, res, next) => {
     next();
 });
 
+const prefijoUrlAPI = '/api/v1';
+
 // rutas
-app.use('/api/v1',rutasUsuario);
+app.use(prefijoUrlAPI + '/usuarios',rutasUsuario);
 
 
 // exportar

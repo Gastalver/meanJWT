@@ -33,7 +33,7 @@ export class UsuarioService {
     let enBody = JSON.stringify(usuario);
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this._http.post(this.apiUrl + 'registro', enBody, {headers: cabeceras})
+    return this._http.post(this.apiUrl + '/usuarios/', enBody, {headers: cabeceras})
   }
 
   /**
@@ -49,7 +49,7 @@ export class UsuarioService {
 
     let enBody = JSON.stringify(usuario);
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
-    return this._http.post(this.apiUrl + 'acceso', enBody, {headers: cabeceras})
+    return this._http.post(this.apiUrl + '/usuarios/acceso', enBody, {headers: cabeceras})
   }
 
   /**
@@ -96,7 +96,7 @@ export class UsuarioService {
   let cabeceras = new HttpHeaders()
     .set('Content-Type', 'application/json')
     .set('Authorization',this.getToken());
-  return this._http.put(this.apiUrl + 'usuario/' + usuario._id, enBody, {headers: cabeceras})
+  return this._http.put(this.apiUrl + '/usuarios/' + usuario._id, enBody, {headers: cabeceras})
 }
 
 
