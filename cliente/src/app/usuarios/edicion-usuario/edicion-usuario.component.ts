@@ -47,7 +47,7 @@ export class EdicionUsuarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log('EL componente usuarios/edicion-usuario se ha cargado.')
+    console.log('archivosParaEnviar: ' + JSON.stringify(this.archivosParaEnviar));
   }
   onSubmit(formularioEdicionUsuario){
     this._servicioUsuario.actualizarUsuario(this.usuario).subscribe(
@@ -56,24 +56,29 @@ export class EdicionUsuarioComponent implements OnInit {
           this.status = 'Fracaso';
           this.mensaje = 'Ha ocurrido un error en el Servidor. Inténtelo más tarde.'
         }else{
-          this._servicioSubidaArchivos.RequestConArchivos(this.apiUrl + '/usuarios/' + this.usuario._id + '/imagen',[],this.archivosParaEnviar,this.token,'imagenUsuario')
-            .then(
-              (resultado: any)=>{
-                this.status = 'Exito';
-                this.usuario.imagen = resultado.usuario.imagen;
-                localStorage.setItem('identidad',JSON.stringify(this.usuario));
-              },
-              (error)=>{
-                let respuesta = JSON.parse(error);
-                this.status = 'Fracaso';
-                if (respuesta.mensaje){
-                this.mensaje = respuesta.mensaje;
-                } else {
-                  this.mensaje = 'Ha habido un problema con el archivo de imagen. Inténtelo de nuevo.'
+          // Guardamos la identidad actualizada en el localStorage
+          localStorage.setItem('identidad',JSON.stringify(this.usuario));
+          // Sölo subimos archivo si hay un archivo para subir seleccionado
+          if (this.archivosParaEnviar.length > 0){
+            this._servicioSubidaArchivos.RequestConArchivos(this.apiUrl + '/usuarios/' + this.usuario._id + '/imagen',[],this.archivosParaEnviar,this.token,'imagenUsuario')
+              .then(
+                (resultado: any)=>{
+                  this.status = 'Exito';
+                  this.usuario.imagen = resultado.usuario.imagen;
+                  localStorage.setItem('identidad',JSON.stringify(this.usuario));
+                },
+                (error)=>{
+                  let respuesta = JSON.parse(error);
+                  this.status = 'Fracaso';
+                  if (respuesta.mensaje){
+                    this.mensaje = respuesta.mensaje;
+                  } else {
+                    this.mensaje = 'Ha habido un problema con el archivo de imagen. Inténtelo de nuevo.'
+                  }
+                  this.archivosParaEnviar=[];
                 }
-                this.archivosParaEnviar=[];
-              }
-            )
+              )
+          }
         }
       },
       (error)=>{
@@ -87,12 +92,17 @@ export class EdicionUsuarioComponent implements OnInit {
 
       }
     )
-    // Suscribir respuesta.
-    // Recibir nuevos datos usuario.
-    // Actualizar identidad en localStorage ¿y token?
 }
 
   eventoCambioEnArchivosSeleccionados(archivosSeleccionados: any){
     this.archivosParaEnviar = <Array<File>>archivosSeleccionados.target.files;
+    // console.log(this.archivosParaEnviar);
+
+  }
+
+  eliminaImagenUsuario(){
+    this.usuario.imagen = null;
+    this.archivosParaEnviar = [];
+    console.log(this.usuario)
   }
 }

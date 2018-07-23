@@ -11,7 +11,7 @@ export class UsuarioGuard implements CanActivate {
   }
   canActivate(){
     let identidad = this._servicioUsuario.getIdentidad();
-      console.log('identidad='+identidad);
+      // console.log('identidad='+identidad);
     if (identidad){
       if (identidad.rol == 'ROL_USUARIO' || identidad.rol == 'ROL_ADMINISTRADOR'){
         return true

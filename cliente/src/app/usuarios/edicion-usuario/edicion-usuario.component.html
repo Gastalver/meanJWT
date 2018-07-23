@@ -81,7 +81,7 @@
          *ngIf="!usuario.imagen">
     <div class="card-body">
       <label for="inputfile" class="btn-sm btn-block btn-primary text-center">
-        <fa [name] = "'file-image-o'"></fa> {{ archivosParaEnviar.length > 0 ? archivosParaEnviar[0].name : 'Subir Avatar'}}</label>
+        <fa [name] = "'file-image-o'"></fa> {{ archivosParaEnviar.length > 0 ? archivosParaEnviar[0].name : 'Cambiar Avatar'}}</label>
       <input name="imagen"
              id="inputfile"
            type="file"
@@ -89,6 +89,11 @@
            (change)="eventoCambioEnArchivosSeleccionados($event)"
            class="inputfile"
       >
+      <button
+        *ngIf="usuario.imagen"
+        (click)="eliminaImagenUsuario()"
+        class="btn btn-sm btn-danger btn-block">
+        <fa [name] = "'trash-o'"></fa> Borrar Avatar</button>
     </div>
   </div>
 
