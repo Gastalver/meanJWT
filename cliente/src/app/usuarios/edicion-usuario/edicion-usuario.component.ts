@@ -58,6 +58,7 @@ export class EdicionUsuarioComponent implements OnInit {
         }else{
           // Guardamos la identidad actualizada en el localStorage
           localStorage.setItem('identidad',JSON.stringify(this.usuario));
+          this.status = 'Exito';
           // Sölo subimos archivo si hay un archivo para subir seleccionado
           if (this.archivosParaEnviar.length > 0){
             this._servicioSubidaArchivos.RequestConArchivos(this.apiUrl + '/usuarios/' + this.usuario._id + '/imagen',[],this.archivosParaEnviar,this.token,'imagenUsuario')
